@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/Scripts/Functions/Home/initialize.js")
+@Scripts.Render("~/Scripts/Functions/Home/functions.js")
+
+<div class="panel panel-flat">
+    <div class="panel-heading">
+        <h4 class="panel-title"><strong>Welcome @Session["UserName"].ToString()!</strong></h4>
+    </div>
+    <div class="panel-body">
+        <div class="col-lg-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h5><strong>Released</strong></h5>
+                </div>
+                <div class="panel-body">
+                    <input id="txtcash_release" class="form-control number" style="text-align:right" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h5 style="color:#ffffff"><strong>Collection</strong></h5>
+                </div>
+                <div class="panel-body">
+                    <input id="txtcash_collected" class="form-control number" style="text-align:right" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h5 style="color:#ffffff"><strong>Receivables</strong></h5>
+                </div>
+                <div class="panel-body">
+                    <input id="txtcash_pulled_out" class="form-control number" style="text-align:right" readonly>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

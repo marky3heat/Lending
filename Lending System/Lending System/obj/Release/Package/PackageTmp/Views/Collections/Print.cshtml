@@ -1,0 +1,92 @@
+﻿@model Lending_System.Models.tbl_payment_details
+<style>
+    table th { /* new style */
+        border-top: double #000000;
+        border-bottom: 1px dashed #000000;
+    }
+    table td { /* new style */
+        width: 100px;
+    }
+</style>
+<div style="font-family: Consolas; font-size: 15px;">
+    <div class="table-responsive" style="width: 100%;">
+        <table class="table" style="font-family: Consolas; font-size: 15px;">
+            <tr>
+                <td class="col-md-4" style="text-align: center; width: 300px">RGL LENDING</td>
+            </tr>
+            <tr>
+                <td class="col-md-4" style="text-align: center; width: 300px">Maa, Davao City</td>
+            </tr>
+            <tr>
+                <td class="col-md-4" style="text-align: center; width: 300px"></td>
+            </tr>
+            <tr>
+                <td class="col-md-4" style="text-align: center; width: 300px"></td>
+            </tr>
+            <tr>
+                <td class="col-md-4" style="text-align: left; width: 300px">Receipt No: @ViewBag.receiptno</td>
+            </tr>
+            <tr>
+                <td class="col-md-4" style="text-align: left; width: 300px">Date: @ViewBag.receiptdate</td>
+            </tr>
+            <tr>
+                <td class="col-md-4" style="text-align: center; width: 300px"></td>
+            </tr>
+            <tr>
+                <td style="text-align: left; width: 400px">Borrower: @ViewBag.borrower</td>
+            </tr>
+            <tr>
+                <td class="col-md-4" style="text-align: left; width: 300px">ID No: @ViewBag.borrower_id</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="table-responsive">
+        <table id="receipt-details" class="table" style="font-family: Consolas; font-size: 15px;">
+            <tr>
+                <th style="text-align: left">REFERENCE</th>
+                <th style="text-align: center">PARTICULARS</th>
+                <th style="text-align: right">AMOUNT</th>
+            </tr>
+            @foreach (var item in ViewBag.receiptdetailslist)
+            {
+                <tr>
+                    <td>@item.reference_no</td>
+                    <td >@item.particulars</td>
+                    <td style="text-align: right">@item.amount</td>
+                </tr>
+            }
+            <tr>
+                <td>Total Amount Paid</td>
+                <td></td>
+                <td style="text-align: right"><b>@ViewBag.total_amount_paid</b></td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <text>============================</text>
+    </div>
+    <div class="table-responsive">
+        <table id="receipt-details-balance" class="table" style="font-family: Consolas; font-size: 15px;">
+            <tr>
+                <td class="col-md-4" style="text-align: left; width: 300px">Balance: </td>
+            </tr>
+            @foreach (var item2 in ViewBag.receiptdetailsbalancelist)
+            {
+                <tr>
+                    <td>@item2.loan_no</td>
+                    <td style="text-align: right">@item2.balance</td>
+                </tr>
+            }
+            <tr>
+                <td class="col-md-4" style="text-align: center; width: 300px"></td>
+            </tr>
+            <tr>
+                <td class="col-md-4" style="text-align: center; width: 300px"></td>
+            </tr>
+            <tr>
+                <td class="col-md-4" style="text-align: left; width: 300px">Cashier: @Session["UserFullName"]</td>
+            </tr>
+        </table>
+    </div>
+</div>
