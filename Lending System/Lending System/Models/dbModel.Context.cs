@@ -40,7 +40,8 @@ namespace Lending_System.Models
         public virtual DbSet<tbl_payment_details> tbl_payment_details { get; set; }
         public virtual DbSet<tbl_loan_ledger> tbl_loan_ledger { get; set; }
         public virtual DbSet<tbl_cash_out> tbl_cash_out { get; set; }
-        public virtual DbSet<tbl_end_of_day_transactions> tbl_end_of_day_transactions { get; set; }
         public virtual DbSet<tbl_adjustment> tbl_adjustment { get; set; }
+        public virtual DbSet<tbl_cash_in> tbl_cash_in { get; set; }
+        public virtual DbSet<tbl_end_of_day_transactions> tbl_end_of_day_transactions { get; set; }
     }
 }

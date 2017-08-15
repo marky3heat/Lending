@@ -19,9 +19,10 @@ namespace Lending_System.Models
         public Nullable<decimal> cash_begin { get; set; }
         public Nullable<decimal> cash_release { get; set; }
         public Nullable<decimal> cash_collected { get; set; }
+        public Nullable<decimal> cash_replenished { get; set; }
         public Nullable<decimal> cash_pulled_out { get; set; }
+        public Nullable<decimal> cash_end { get; set; }
         public string created_by { get; set; }
         public Nullable<System.DateTime> date_created { get; set; }
-        public Nullable<decimal> cash_end { get; set; }
     }
 }

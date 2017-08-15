@@ -42,6 +42,7 @@ namespace Lending_System.Controllers
                             e.cash_begin,
                             e.cash_release,
                             e.cash_collected,
+                            e.cash_replenished,
                             e.cash_pulled_out,
                             e.cash_end
                         };
@@ -51,7 +52,6 @@ namespace Lending_System.Controllers
             }
             catch (Exception)
             {
-                throw;
                 throw;
             }
         }
@@ -186,6 +186,34 @@ namespace Lending_System.Controllers
                 return Json("Failed", JsonRequestBehavior.DenyGet);
                 throw ex;
             }   
+        }
+        public JsonResult GetCashReplenished()
+        {
+            try
+            {
+                var datetimenow = DateTime.Now;
+                var datenow = datetimenow.Date;
+                decimal balance = 0;
+                db_lendingEntities db = new db_lendingEntities();
+                {
+
+                    var result = from d in db.tbl_cash_in where (d.CashInDate >= datenow && d.CashInDate <= datenow) orderby d.CashInId ascending select d;
+                    if (result != null)
+                    {
+                        foreach (var data in result)
+                        {
+                            balance = balance + (decimal)data.Amount;
+                        }
+                    }
+                }
+
+                return Json(balance, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json("Failed", JsonRequestBehavior.DenyGet);
+                throw ex;
+            }
         }
         public JsonResult GetCashPullOut()
         {

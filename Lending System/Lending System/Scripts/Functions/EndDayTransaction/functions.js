@@ -33,6 +33,18 @@ function GetCashCollected() {
         success: function (response) {
             
             $('#txtcash_collected').val(response);
+            GetCashReplenished();
+        },
+        error: ""
+    });
+}
+function GetCashReplenished() {
+    $.ajax({
+        url: RootUrl + "/EndDayTransaction/GetCashReplenished",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            $('#txtcash_replenished').val(response);
             GetCashPulledOut();
         },
         error: ""
@@ -44,7 +56,7 @@ function GetCashPulledOut() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (response) {
-            $('#txtcash_pulled_out').val(response)
+            $('#txtcash_pulled_out').val(response);
             GetCashEnd();
         },
         error: ""

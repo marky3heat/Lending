@@ -32,8 +32,7 @@ var List =
                         },
                         { "data": "username", "className": "dt-left" },
                         { "data": "amount", "className": "text-right", render: $.fn.dataTable.render.number(',', '.', 2, '') }
-                ],
-
+                ]
             });
         },
     }

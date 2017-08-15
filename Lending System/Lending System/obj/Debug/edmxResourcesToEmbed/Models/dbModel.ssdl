@@ -26,6 +26,19 @@
     <Property Name="amount" Type="decimal" Precision="15" Scale="4" />
     <Property Name="balance" Type="decimal" Precision="15" Scale="4" />
   </EntityType>
+  <EntityType Name="tbl_cash_in">
+    <Key>
+      <PropertyRef Name="CashInId" />
+    </Key>
+    <Property Name="CashInId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CashInDate" Type="date" />
+    <Property Name="UserName" Type="varchar" MaxLength="32" />
+    <Property Name="DateFrom" Type="datetime" Precision="0" />
+    <Property Name="DateTo" Type="datetime" Precision="0" />
+    <Property Name="Amount" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="32" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Precision="0" Nullable="false" />
+  </EntityType>
   <EntityType Name="tbl_cash_out">
     <Key>
       <PropertyRef Name="autonum" />
@@ -75,6 +88,7 @@
     <Property Name="cash_begin" Type="decimal" Precision="15" Scale="4" />
     <Property Name="cash_release" Type="decimal" Precision="15" Scale="4" />
     <Property Name="cash_collected" Type="decimal" Precision="15" Scale="4" />
+    <Property Name="cash_replenished" Type="decimal" Precision="15" Scale="4" />
     <Property Name="cash_pulled_out" Type="decimal" Precision="15" Scale="4" />
     <Property Name="cash_end" Type="decimal" Precision="15" Scale="4" />
     <Property Name="created_by" Type="varchar" MaxLength="50" />
@@ -231,6 +245,7 @@
   <EntityContainer Name="db_lendingModelStoreContainer">
     <EntitySet Name="tbl_adjustment" EntityType="Self.tbl_adjustment" Schema="db_lending" store:Type="Tables" />
     <EntitySet Name="tbl_amortization" EntityType="Self.tbl_amortization" Schema="db_lending" store:Type="Tables" />
+    <EntitySet Name="tbl_cash_in" EntityType="Self.tbl_cash_in" Schema="db_lending" store:Type="Tables" />
     <EntitySet Name="tbl_cash_out" EntityType="Self.tbl_cash_out" Schema="db_lending" store:Type="Tables" />
     <EntitySet Name="tbl_customer" EntityType="Self.tbl_customer" Schema="db_lending" store:Type="Tables" />
     <EntitySet Name="tbl_department" EntityType="Self.tbl_department" Schema="db_lending" store:Type="Tables" />

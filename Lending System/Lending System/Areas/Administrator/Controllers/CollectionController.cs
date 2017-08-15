@@ -350,6 +350,7 @@ namespace Lending_System.Areas.Administrator.Controllers
                 var result =
                     from d in db.tbl_loan_ledger
                     where d.loan_no.Equals(id)
+                    orderby(d.autonum)
                     select d;
 
                 foreach (var data in result)
