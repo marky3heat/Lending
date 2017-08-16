@@ -7,6 +7,7 @@
         "cash_begin": $('#txtcash_begin').val(),
         "cash_release": $('#txtcash_release').val(),
         "cash_collected": $('#txtcash_collected').val(),
+        "cash_replenished": $('#txtcash_replenished').val(),
         "cash_pulled_out": $('#txtcash_pulled_out').val(),
         "cash_end": $('#txtcash_end').val()
     };
