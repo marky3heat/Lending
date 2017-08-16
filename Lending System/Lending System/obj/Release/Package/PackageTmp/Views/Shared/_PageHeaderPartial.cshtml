@@ -1,4 +1,4 @@
-﻿<div class="page-header-content">
+﻿@*<div class="page-header-content">
     <div class="page-title">   
         @if (Session["UserRank"].ToString() == "1")
         {
@@ -13,10 +13,14 @@
             <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">User</span> - @ViewBag.Form</h4>
         }
     </div>
-</div>
+</div>*@
 <div class="breadcrumb-line">
     <ul class="breadcrumb">
-        <li><a href="#"><i class="icon-home2 position-left"></i> @ViewBag.Controller</a></li>
-        <li class="active">@ViewBag.Action</li>
+        <li><a href="~/Home/Index"><i class="icon-home2 position-left"></i> Home</a></li>
+        <li class="active">@ViewBag.Controller</li>
+        @if (ViewBag.Action != "")
+        {
+            <li class="active">@ViewBag.Action</li>
+        }      
     </ul>
 </div>

@@ -217,21 +217,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tbl_end_of_day_transactions">
-      <EntityTypeMapping TypeName="db_lendingModel.tbl_end_of_day_transactions">
-        <MappingFragment StoreEntitySet="tbl_end_of_day_transactions">
-          <ScalarProperty Name="cash_end" ColumnName="cash_end" />
-          <ScalarProperty Name="date_created" ColumnName="date_created" />
-          <ScalarProperty Name="created_by" ColumnName="created_by" />
-          <ScalarProperty Name="cash_pulled_out" ColumnName="cash_pulled_out" />
-          <ScalarProperty Name="cash_collected" ColumnName="cash_collected" />
-          <ScalarProperty Name="cash_release" ColumnName="cash_release" />
-          <ScalarProperty Name="cash_begin" ColumnName="cash_begin" />
-          <ScalarProperty Name="date_trans" ColumnName="date_trans" />
-          <ScalarProperty Name="autonum" ColumnName="autonum" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="tbl_adjustment">
       <EntityTypeMapping TypeName="db_lendingModel.tbl_adjustment">
         <MappingFragment StoreEntitySet="tbl_adjustment">
@@ -243,6 +228,36 @@
           <ScalarProperty Name="TransType" ColumnName="TransType" />
           <ScalarProperty Name="DateTrans" ColumnName="DateTrans" />
           <ScalarProperty Name="Autonum" ColumnName="Autonum" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_cash_in">
+      <EntityTypeMapping TypeName="db_lendingModel.tbl_cash_in">
+        <MappingFragment StoreEntitySet="tbl_cash_in">
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+          <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="CashInDate" ColumnName="CashInDate" />
+          <ScalarProperty Name="CashInId" ColumnName="CashInId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_end_of_day_transactions">
+      <EntityTypeMapping TypeName="db_lendingModel.tbl_end_of_day_transactions">
+        <MappingFragment StoreEntitySet="tbl_end_of_day_transactions">
+          <ScalarProperty Name="date_created" ColumnName="date_created" />
+          <ScalarProperty Name="created_by" ColumnName="created_by" />
+          <ScalarProperty Name="cash_end" ColumnName="cash_end" />
+          <ScalarProperty Name="cash_pulled_out" ColumnName="cash_pulled_out" />
+          <ScalarProperty Name="cash_replenished" ColumnName="cash_replenished" />
+          <ScalarProperty Name="cash_collected" ColumnName="cash_collected" />
+          <ScalarProperty Name="cash_release" ColumnName="cash_release" />
+          <ScalarProperty Name="cash_begin" ColumnName="cash_begin" />
+          <ScalarProperty Name="date_trans" ColumnName="date_trans" />
+          <ScalarProperty Name="autonum" ColumnName="autonum" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

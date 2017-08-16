@@ -48,6 +48,7 @@ var List =
                         { "data": "cash_begin", "className": "text-right", render: $.fn.dataTable.render.number(',', '.', 2, '') },
                         { "data": "cash_release", "className": "text-right", render: $.fn.dataTable.render.number(',', '.', 2, '') },
                         { "data": "cash_collected", "className": "text-right", render: $.fn.dataTable.render.number(',', '.', 2, '') },
+                        { "data": "cash_replenished", "className": "text-right", render: $.fn.dataTable.render.number(',', '.', 2, '') },
                         { "data": "cash_pulled_out", "className": "text-right", render: $.fn.dataTable.render.number(',', '.', 2, '') },
                         { "data": "cash_end", "className": "text-right", render: $.fn.dataTable.render.number(',', '.', 2, '') },
                         {

@@ -73,6 +73,7 @@ namespace Lending_System.Controllers
                     tbl.cash_begin = model.cash_begin;
                     tbl.cash_release = model.cash_release;
                     tbl.cash_collected = model.cash_collected;
+                    tbl.cash_replenished = model.cash_replenished;
                     tbl.cash_pulled_out = model.cash_pulled_out;
                     tbl.cash_end = model.cash_end;
                     tbl.created_by = Session["UserName"].ToString();
@@ -88,7 +89,7 @@ namespace Lending_System.Controllers
                     //"date_trans", "cash_begin", "cash_release", "cash_collected", "cash_pulled_out", "cash_end"
                     var update = db.tbl_end_of_day_transactions.SingleOrDefault(d => d.date_trans >= datenow && d.date_trans <= datenow);
                     if (TryUpdateModel(update, "",
-                       new string[] { "date_trans", "cash_begin", "cash_release", "cash_collected", "cash_pulled_out", "cash_end" }))
+                       new string[] { "date_trans", "cash_begin", "cash_release", "cash_collected", "cash_replenished", "cash_pulled_out", "cash_end" }))
                     {
                         db.SaveChanges();
                         return Json("Success", JsonRequestBehavior.AllowGet);
@@ -279,6 +280,7 @@ namespace Lending_System.Controllers
                     ViewBag.CashCollection = decimal.Round((decimal)tbl.cash_collected, 2, MidpointRounding.AwayFromZero);
                     ViewBag.CashEnd = decimal.Round((decimal)tbl.cash_end, 2, MidpointRounding.AwayFromZero);
                     ViewBag.CashRelease = decimal.Round((decimal)tbl.cash_release, 2, MidpointRounding.AwayFromZero);
+                    ViewBag.CashReplenished = decimal.Round((decimal)tbl.cash_replenished, 2, MidpointRounding.AwayFromZero);
                     ViewBag.CashPullOut = decimal.Round((decimal)tbl.cash_pulled_out, 2, MidpointRounding.AwayFromZero);
                     date = tbl.date_trans;
                 }

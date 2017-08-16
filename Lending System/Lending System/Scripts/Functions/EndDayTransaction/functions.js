@@ -66,8 +66,9 @@ function GetCashEnd() {
     var begin = parseFloat($('#txtcash_begin').val().replace(/[^0-9\.]+/g, ""));
     var release = parseFloat($('#txtcash_release').val().replace(/[^0-9\.]+/g, ""));
     var collect = parseFloat($('#txtcash_collected').val().replace(/[^0-9\.]+/g, ""));
+    var replenished = parseFloat($('#txtcash_replenished').val().replace(/[^0-9\.]+/g, ""));
     var pullout = parseFloat($('#txtcash_pulled_out').val().replace(/[^0-9\.]+/g, ""));
-    var balance = begin - release + collect - pullout;
+    var balance = begin + replenished - release + collect - pullout;
     
     $('#txtcash_end').val(balance);
 }

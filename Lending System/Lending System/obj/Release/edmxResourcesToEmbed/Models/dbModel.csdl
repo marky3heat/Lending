@@ -72,8 +72,9 @@
     <EntitySet Name="tbl_payment_details" EntityType="db_lendingModel.tbl_payment_details" />
     <EntitySet Name="tbl_loan_ledger" EntityType="db_lendingModel.tbl_loan_ledger" />
     <EntitySet Name="tbl_cash_out" EntityType="db_lendingModel.tbl_cash_out" />
-    <EntitySet Name="tbl_end_of_day_transactions" EntityType="db_lendingModel.tbl_end_of_day_transactions" />
     <EntitySet Name="tbl_adjustment" EntityType="db_lendingModel.tbl_adjustment" />
+    <EntitySet Name="tbl_cash_in" EntityType="db_lendingModel.tbl_cash_in" />
+    <EntitySet Name="tbl_end_of_day_transactions" EntityType="db_lendingModel.tbl_end_of_day_transactions" />
   </EntityContainer>
   <EntityType Name="tbl_fees">
     <Key>
@@ -220,20 +221,6 @@
     <Property Name="date_created" Type="DateTime" />
     <Property Name="created_by" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
-  <EntityType Name="tbl_end_of_day_transactions">
-    <Key>
-      <PropertyRef Name="autonum" />
-    </Key>
-    <Property Name="autonum" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="date_trans" Type="DateTime" />
-    <Property Name="cash_begin" Type="Decimal" />
-    <Property Name="cash_release" Type="Decimal" />
-    <Property Name="cash_collected" Type="Decimal" />
-    <Property Name="cash_pulled_out" Type="Decimal" />
-    <Property Name="created_by" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="date_created" Type="DateTime" />
-    <Property Name="cash_end" Type="Decimal" />
-  </EntityType>
   <EntityType Name="tbl_adjustment">
     <Key>
       <PropertyRef Name="Autonum" />
@@ -246,5 +233,33 @@
     <Property Name="Remarks" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
     <Property Name="CreatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
     <Property Name="CreatedAt" Type="DateTime" />
+  </EntityType>
+  <EntityType Name="tbl_cash_in">
+    <Key>
+      <PropertyRef Name="CashInId" />
+    </Key>
+    <Property Name="CashInId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CashInDate" Type="DateTime" />
+    <Property Name="UserName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="DateFrom" Type="DateTime" />
+    <Property Name="DateTo" Type="DateTime" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" />
+    <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_end_of_day_transactions">
+    <Key>
+      <PropertyRef Name="autonum" />
+    </Key>
+    <Property Name="autonum" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="date_trans" Type="DateTime" />
+    <Property Name="cash_begin" Type="Decimal" />
+    <Property Name="cash_release" Type="Decimal" />
+    <Property Name="cash_collected" Type="Decimal" />
+    <Property Name="cash_replenished" Type="Decimal" />
+    <Property Name="cash_pulled_out" Type="Decimal" />
+    <Property Name="cash_end" Type="Decimal" />
+    <Property Name="created_by" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="date_created" Type="DateTime" />
   </EntityType>
 </Schema>

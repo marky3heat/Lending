@@ -33,6 +33,18 @@ function GetCashCollected() {
         success: function (response) {
             
             $('#txtcash_collected').val(response);
+            GetCashReplenished();
+        },
+        error: ""
+    });
+}
+function GetCashReplenished() {
+    $.ajax({
+        url: RootUrl + "/EndDayTransaction/GetCashReplenished",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            $('#txtcash_replenished').val(response);
             GetCashPulledOut();
         },
         error: ""
@@ -44,7 +56,7 @@ function GetCashPulledOut() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (response) {
-            $('#txtcash_pulled_out').val(response)
+            $('#txtcash_pulled_out').val(response);
             GetCashEnd();
         },
         error: ""
@@ -54,8 +66,9 @@ function GetCashEnd() {
     var begin = parseFloat($('#txtcash_begin').val().replace(/[^0-9\.]+/g, ""));
     var release = parseFloat($('#txtcash_release').val().replace(/[^0-9\.]+/g, ""));
     var collect = parseFloat($('#txtcash_collected').val().replace(/[^0-9\.]+/g, ""));
+    var replenished = parseFloat($('#txtcash_replenished').val().replace(/[^0-9\.]+/g, ""));
     var pullout = parseFloat($('#txtcash_pulled_out').val().replace(/[^0-9\.]+/g, ""));
-    var balance = begin - release + collect - pullout;
+    var balance = begin + replenished - release + collect - pullout;
     
     $('#txtcash_end').val(balance);
 }

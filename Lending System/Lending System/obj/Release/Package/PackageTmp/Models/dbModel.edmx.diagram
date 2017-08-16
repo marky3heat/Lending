@@ -20,8 +20,9 @@
         <EntityTypeShape EntityType="db_lendingModel.tbl_payment_details" Width="1.875" PointX="3.375" PointY="7.75" />
         <EntityTypeShape EntityType="db_lendingModel.tbl_loan_ledger" Width="1.5" PointX="5.375" PointY="4.75" />
         <EntityTypeShape EntityType="db_lendingModel.tbl_cash_out" Width="1.5" PointX="7.375" PointY="7.75" />
-        <EntityTypeShape EntityType="db_lendingModel.tbl_end_of_day_transactions" Width="1.5" PointX="10.25" PointY="7" />
         <EntityTypeShape EntityType="db_lendingModel.tbl_adjustment" Width="1.5" PointX="13.25" PointY="6.875" />
+        <EntityTypeShape EntityType="db_lendingModel.tbl_cash_in" Width="1.5" PointX="9.25" PointY="8.625" />
+        <EntityTypeShape EntityType="db_lendingModel.tbl_end_of_day_transactions" Width="1.5" PointX="0.75" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
