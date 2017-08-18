@@ -91,11 +91,10 @@ namespace Lending_System.Controllers
                     if (TryUpdateModel(update, "",
                        new string[] { "date_trans", "cash_begin", "cash_release", "cash_collected", "cash_replenished", "cash_pulled_out", "cash_end" }))
                     {
-                        db.SaveChanges();
-                        return Json("Success", JsonRequestBehavior.AllowGet);
+                        db.SaveChanges();               
                     }
                 }
-                return View();
+                return Json("Success", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

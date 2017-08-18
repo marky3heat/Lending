@@ -237,9 +237,20 @@ namespace Lending_System.Areas.Administrator.Controllers
                 success = result;
                 if (result)
                 {
-                    decimal totalPayment = decimal.Round(decimal.Parse(model.Payment), 2, MidpointRounding.AwayFromZero);
-                    decimal amountDuePrincipal = decimal.Round(decimal.Parse(model.AmountDuePrincipal), 2, MidpointRounding.AwayFromZero);
-                    decimal amountDueInterest = decimal.Round(decimal.Parse(model.AmountDueInterest), 2, MidpointRounding.AwayFromZero);
+                    decimal totalPayment = 0;
+                    decimal amountDuePrincipal = 0;
+                    decimal amountDueInterest = 0;
+
+                    try
+                    {
+                         totalPayment = decimal.Round(decimal.Parse(model.Payment), 2, MidpointRounding.AwayFromZero);
+                         amountDuePrincipal = decimal.Round(decimal.Parse(model.AmountDuePrincipal), 2, MidpointRounding.AwayFromZero);
+                         amountDueInterest = decimal.Round(decimal.Parse(model.AmountDueInterest), 2, MidpointRounding.AwayFromZero);
+                    }
+                    catch (Exception ex)
+                    {
+                        
+                    }
 
                     decimal paymentInterest = 0;
                     decimal paymentPrincipal = 0;
