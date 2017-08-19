@@ -156,6 +156,7 @@ namespace Lending_System.Controllers
                 var result =
                     from d in db.tbl_loan_ledger
                     where d.loan_no.Equals(id)
+                    orderby d.autonum
                     select d;
 
                 foreach (var data in result)
@@ -208,7 +209,7 @@ namespace Lending_System.Controllers
             db = new db_lendingEntities();
             {
                 decimal? adjustment = 0;
-                var result = from d in db.tbl_adjustment where d.LoanNo.Equals(id) select d;
+                var result = from d in db.tbl_adjustment where d.LoanNo.Equals(id) orderby d.Autonum select d;
                 foreach (var data in result)
                 {
                     if (data.TransType == "Debit memo")
@@ -232,6 +233,7 @@ namespace Lending_System.Controllers
                 var result =
                     from d in db.tbl_loan_ledger
                     where d.loan_no.Equals(id)
+                    orderby d.autonum
                     select d;
 
                 foreach (var data in result)
@@ -258,6 +260,7 @@ namespace Lending_System.Controllers
                     where d.loan_no == id
                           && d.status == "Released"
                           && d.due_date < _serverDateTime
+                          orderby d.autonum
                     select d;
                 foreach (var dt in result)
                 {
@@ -300,6 +303,7 @@ namespace Lending_System.Controllers
                 var result =
                     from d in db.tbl_loan_ledger
                     where d.loan_no.Equals(id)
+                    orderby d.autonum
                     select d;
 
                 foreach (var data in result)

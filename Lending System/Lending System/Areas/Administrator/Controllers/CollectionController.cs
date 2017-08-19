@@ -223,105 +223,122 @@ namespace Lending_System.Areas.Administrator.Controllers
 
                 db = new db_lendingEntities();
 
-                payment.reference_no = model.PaymentNo;
-                payment.date_trans = DateTime.Parse(model.PaymentDate);
-                payment.payor_id = int.Parse(model.CustomerId);
-                payment.payor_name = model.CustomerName;
-                payment.total_amount = decimal.Round(decimal.Parse(model.Payment), 2, MidpointRounding.AwayFromZero);
-                payment.created_by = Session["UserName"].ToString();
-                payment.date_created = DateTime.Now;
-                db.tbl_payment.Add(payment);
-                await db.SaveChangesAsync();
+                var isDuplicate = await db.tbl_payment.AllAsync(u => u.reference_no == model.PaymentNo);
 
-                var result = true;
-                success = result;
-                if (result)
+                if (isDuplicate == false)
                 {
-                    decimal totalPayment = 0;
-                    decimal amountDuePrincipal = 0;
-                    decimal amountDueInterest = 0;
+                    payment.reference_no = model.PaymentNo;
+                    payment.date_trans = DateTime.Parse(model.PaymentDate);
+                    payment.payor_id = int.Parse(model.CustomerId);
+                    payment.payor_name = model.CustomerName;
+                    payment.total_amount = decimal.Round(decimal.Parse(model.Payment), 2,
+                        MidpointRounding.AwayFromZero);
+                    payment.created_by = Session["UserName"].ToString();
+                    payment.date_created = DateTime.Now;
 
-                    try
-                    {
-                         totalPayment = decimal.Round(decimal.Parse(model.Payment), 2, MidpointRounding.AwayFromZero);
-                         amountDuePrincipal = decimal.Round(decimal.Parse(model.AmountDuePrincipal), 2, MidpointRounding.AwayFromZero);
-                         amountDueInterest = decimal.Round(decimal.Parse(model.AmountDueInterest), 2, MidpointRounding.AwayFromZero);
-                    }
-                    catch (Exception ex)
-                    {
-                        
-                    }
-
-                    decimal paymentInterest = 0;
-                    decimal paymentPrincipal = 0;
-
-                    if (amountDueInterest > 0)
-                    {
-                        if (totalPayment >= amountDueInterest)
-                        {
-                            paymentInterest = decimal.Round(amountDueInterest, 2, MidpointRounding.AwayFromZero);
-                            totalPayment = totalPayment - paymentInterest;
-                        }
-                        else if (totalPayment < amountDueInterest)
-                        {
-                            paymentInterest = totalPayment;
-                            totalPayment = 0;
-                        }
-                    }
-                    if (amountDuePrincipal > 0)
-                    {
-                        paymentPrincipal = totalPayment;
-                        totalPayment = 0;
-                    }
-                    if (paymentPrincipal > 0)
-                    {
-                        tbl_payment_details paymentDetailsPrincipal = new tbl_payment_details();
-                        paymentDetailsPrincipal.reference_no = model.PaymentNo;
-                        paymentDetailsPrincipal.payment_type = "OR Payment";
-                        paymentDetailsPrincipal.loan_no = model.LoanNo;
-                        paymentDetailsPrincipal.loan_name = model.LoanName;
-                        paymentDetailsPrincipal.due_date = DateTime.Parse(model.LoanDueDate);
-                        paymentDetailsPrincipal.amount = decimal.Round(paymentPrincipal, 2, MidpointRounding.AwayFromZero);
-                        paymentDetailsPrincipal.created_by = Session["UserName"].ToString();
-                        paymentDetailsPrincipal.date_created = DateTime.Now;
-                        db.tbl_payment_details.Add(paymentDetailsPrincipal);
-                        await db.SaveChangesAsync();
-                    }
-                    if (paymentInterest > 0)
-                    {
-                        tbl_payment_details paymentDetailsInterest = new tbl_payment_details();
-                        paymentDetailsInterest.reference_no = model.PaymentNo;
-                        paymentDetailsInterest.payment_type = "OR Payment Interest";
-                        paymentDetailsInterest.loan_no = model.LoanNo;
-                        paymentDetailsInterest.loan_name = model.LoanName;
-                        paymentDetailsInterest.due_date = DateTime.Parse(model.LoanDueDate);
-                        paymentDetailsInterest.amount = decimal.Round(paymentInterest, 2, MidpointRounding.AwayFromZero);
-                        paymentDetailsInterest.created_by = Session["UserName"].ToString();
-                        paymentDetailsInterest.date_created = DateTime.Now;
-                        db.tbl_payment_details.Add(paymentDetailsInterest);
-                        await db.SaveChangesAsync();
-                    }
-
-                    tbl_loan_ledger loanLedger = new tbl_loan_ledger();
-                    loanLedger.date_trans = DateTime.Parse(model.PaymentDate);
-                    loanLedger.trans_type = "OR Payment";
-                    loanLedger.reference_no = model.PaymentNo;
-                    loanLedger.loan_no = model.LoanNo;
-                    loanLedger.loan_type_name = model.LoanName;
-                    loanLedger.customer_id = int.Parse(model.CustomerId);
-                    loanLedger.customer_name = model.CustomerName;
-                    loanLedger.interest_type = GetInterestType(model.LoanName);
-                    loanLedger.interest_rate = GetInterestRate(model.LoanName);
-                    loanLedger.interest = decimal.Round(paymentInterest, 2, MidpointRounding.AwayFromZero);
-                    loanLedger.amount_paid = decimal.Round(decimal.Parse(model.Payment), 2, MidpointRounding.AwayFromZero);
-                    loanLedger.principal = decimal.Round(paymentPrincipal, 2, MidpointRounding.AwayFromZero);
-                    loanLedger.balance = 0;
-                    loanLedger.date_created = DateTime.Now;
-                    loanLedger.created_by = Session["UserName"].ToString();
-                    db.tbl_loan_ledger.Add(loanLedger);
+                    db.tbl_payment.Add(payment);
                     await db.SaveChangesAsync();
 
-                    message = "Successfully saved.";
+                    var result = true;
+                    success = result;
+                    if (result)
+                    {
+                        decimal totalPayment = 0;
+                        decimal amountDuePrincipal = 0;
+                        decimal amountDueInterest = 0;
+
+                        try
+                        {
+                            totalPayment = decimal.Round(decimal.Parse(model.Payment), 2,
+                                MidpointRounding.AwayFromZero);
+                            amountDuePrincipal = decimal.Round(decimal.Parse(model.AmountDuePrincipal), 2,
+                                MidpointRounding.AwayFromZero);
+                            amountDueInterest = decimal.Round(decimal.Parse(model.AmountDueInterest), 2,
+                                MidpointRounding.AwayFromZero);
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+
+                        decimal paymentInterest = 0;
+                        decimal paymentPrincipal = 0;
+
+                        if (amountDueInterest > 0)
+                        {
+                            if (totalPayment >= amountDueInterest)
+                            {
+                                paymentInterest = decimal.Round(amountDueInterest, 2, MidpointRounding.AwayFromZero);
+                                totalPayment = totalPayment - paymentInterest;
+                            }
+                            else if (totalPayment < amountDueInterest)
+                            {
+                                paymentInterest = totalPayment;
+                                totalPayment = 0;
+                            }
+                        }
+                        if (amountDuePrincipal > 0)
+                        {
+                            paymentPrincipal = totalPayment;
+                            totalPayment = 0;
+                        }
+                        if (paymentPrincipal > 0)
+                        {
+                            tbl_payment_details paymentDetailsPrincipal = new tbl_payment_details();
+                            paymentDetailsPrincipal.reference_no = model.PaymentNo;
+                            paymentDetailsPrincipal.payment_type = "OR Payment";
+                            paymentDetailsPrincipal.loan_no = model.LoanNo;
+                            paymentDetailsPrincipal.loan_name = model.LoanName;
+                            paymentDetailsPrincipal.due_date = DateTime.Parse(model.LoanDueDate);
+                            paymentDetailsPrincipal.amount =
+                                decimal.Round(paymentPrincipal, 2, MidpointRounding.AwayFromZero);
+                            paymentDetailsPrincipal.created_by = Session["UserName"].ToString();
+                            paymentDetailsPrincipal.date_created = DateTime.Now;
+                            db.tbl_payment_details.Add(paymentDetailsPrincipal);
+                            await db.SaveChangesAsync();
+                        }
+                        if (paymentInterest > 0)
+                        {
+                            tbl_payment_details paymentDetailsInterest = new tbl_payment_details();
+                            paymentDetailsInterest.reference_no = model.PaymentNo;
+                            paymentDetailsInterest.payment_type = "OR Payment Interest";
+                            paymentDetailsInterest.loan_no = model.LoanNo;
+                            paymentDetailsInterest.loan_name = model.LoanName;
+                            paymentDetailsInterest.due_date = DateTime.Parse(model.LoanDueDate);
+                            paymentDetailsInterest.amount =
+                                decimal.Round(paymentInterest, 2, MidpointRounding.AwayFromZero);
+                            paymentDetailsInterest.created_by = Session["UserName"].ToString();
+                            paymentDetailsInterest.date_created = DateTime.Now;
+                            db.tbl_payment_details.Add(paymentDetailsInterest);
+                            await db.SaveChangesAsync();
+                        }
+
+                        tbl_loan_ledger loanLedger = new tbl_loan_ledger();
+                        loanLedger.date_trans = DateTime.Parse(model.PaymentDate);
+                        loanLedger.trans_type = "OR Payment";
+                        loanLedger.reference_no = model.PaymentNo;
+                        loanLedger.loan_no = model.LoanNo;
+                        loanLedger.loan_type_name = model.LoanName;
+                        loanLedger.customer_id = int.Parse(model.CustomerId);
+                        loanLedger.customer_name = model.CustomerName;
+                        loanLedger.interest_type = GetInterestType(model.LoanName);
+                        loanLedger.interest_rate = GetInterestRate(model.LoanName);
+                        loanLedger.interest = decimal.Round(paymentInterest, 2, MidpointRounding.AwayFromZero);
+                        loanLedger.amount_paid =
+                            decimal.Round(decimal.Parse(model.Payment), 2, MidpointRounding.AwayFromZero);
+                        loanLedger.principal = decimal.Round(paymentPrincipal, 2, MidpointRounding.AwayFromZero);
+                        loanLedger.balance = 0;
+                        loanLedger.date_created = DateTime.Now;
+                        loanLedger.created_by = Session["UserName"].ToString();
+                        db.tbl_loan_ledger.Add(loanLedger);
+                        await db.SaveChangesAsync();
+
+                        message = "Successfully saved.";
+                    }
+                    else
+                    {
+                        message = "Error saving data. Duplicate entry.";
+                    }
                 }
                 else
                 {
@@ -333,6 +350,8 @@ namespace Lending_System.Areas.Administrator.Controllers
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
+
+                return Json(new { success = false, message = "Failed to save." });
             }
         }
 

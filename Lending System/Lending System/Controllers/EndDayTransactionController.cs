@@ -275,12 +275,18 @@ namespace Lending_System.Controllers
                 DateTime? date = null;
                 if (tbl != null)
                 {
-                    ViewBag.CashBeginning = decimal.Round((decimal)tbl.cash_begin, 2, MidpointRounding.AwayFromZero);
-                    ViewBag.CashCollection = decimal.Round((decimal)tbl.cash_collected, 2, MidpointRounding.AwayFromZero);
-                    ViewBag.CashEnd = decimal.Round((decimal)tbl.cash_end, 2, MidpointRounding.AwayFromZero);
-                    ViewBag.CashRelease = decimal.Round((decimal)tbl.cash_release, 2, MidpointRounding.AwayFromZero);
-                    ViewBag.CashReplenished = decimal.Round((decimal)tbl.cash_replenished, 2, MidpointRounding.AwayFromZero);
-                    ViewBag.CashPullOut = decimal.Round((decimal)tbl.cash_pulled_out, 2, MidpointRounding.AwayFromZero);
+                    ViewBag.CashBeginning = String.Format("{0:n}", decimal.Round((decimal)tbl.cash_begin, 2, MidpointRounding.AwayFromZero));
+                
+                    ViewBag.CashCollection = String.Format("{0:n}", decimal.Round((decimal)tbl.cash_collected, 2, MidpointRounding.AwayFromZero));
+
+                    ViewBag.CashEnd = String.Format("{0:n}", decimal.Round((decimal)tbl.cash_end, 2, MidpointRounding.AwayFromZero));
+
+                    ViewBag.CashRelease = String.Format("{0:n}", decimal.Round((decimal)tbl.cash_release, 2, MidpointRounding.AwayFromZero));
+
+                    ViewBag.CashReplenished = String.Format("{0:n}", decimal.Round((decimal)tbl.cash_replenished, 2, MidpointRounding.AwayFromZero));
+
+                    ViewBag.CashPullOut = String.Format("{0:n}", decimal.Round((decimal)tbl.cash_pulled_out, 2, MidpointRounding.AwayFromZero));
+
                     date = tbl.date_trans;
                 }
                 ViewBag.dateString = String.Format("{0:MMMM dd, yyyy}", date);
