@@ -25,7 +25,7 @@ function showPrintDialog(divId) {
     window.print();
     setTimeout(function () { window.print(); }, 500);
     setTimeout(function () { window.close(); }, 300);
-    setTimeout(function () { window.location.href = RootUrl + "/Receivables/Index"; }, 300);
+    setTimeout(function () { window.location.href = RootUrl + "Receivables/Index"; }, 300);
 
     document.body.innerHTML = originalContents;
 
