@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
-    if (RootUrl == "/") {
-        RootUrl = ""
+    if (RootUrl === "/") {
+        RootUrl = "";
     }
 
     $('#asOf').val(mm + "/" + dd + "/" + yyyy);

@@ -1,9 +1,9 @@
 ﻿function LoadPrint() {
-    window.location.href = RootUrl + "Receivables/Print?date=" + $('#asOf').val();
+    window.location.href = RootUrl + "/Receivables/Print?date=" + $('#asOf').val();
 }
 function LoadDetails(parameters) {
 
-    var url = RootUrl + "Receivables/PrintDetails?date=" + parameters;
+    var url = RootUrl + "/Receivables/PrintDetails?date=" + parameters;
     var encodedParam = encodeURIComponent(url);
 
     $('#report-body').load(url, function () { });
@@ -25,7 +25,7 @@ function showPrintDialog(divId) {
     window.print();
     setTimeout(function () { window.print(); }, 500);
     setTimeout(function () { window.close(); }, 300);
-    setTimeout(function () { window.location.href = RootUrl + "Receivables/Index"; }, 300);
+    setTimeout(function () { window.location.href = RootUrl + "/Receivables/Index"; }, 300);
 
     document.body.innerHTML = originalContents;
 
