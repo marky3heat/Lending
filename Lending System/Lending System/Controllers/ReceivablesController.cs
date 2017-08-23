@@ -66,8 +66,13 @@ namespace Lending_System.Controllers
                                 decimal adjustment = decimal.Round((decimal)GetAdjustment(dt.loan_no), 2, MidpointRounding.AwayFromZero);
                                 decimal? principal = decimal.Round((decimal)dt.loan_granted, 2, MidpointRounding.AwayFromZero);
                                 decimal? principalInterest =  decimal.Round((decimal)(dt.loan_granted * (dt.loan_interest_rate / 100)), 2, MidpointRounding.AwayFromZero);
+                                //if (GetInterestType(dt.loan_name) == "2" || (GetInterestType(dt.loan_name) != "1" && GetInterestType(dt.loan_name) != "2"))
+                                //{
+                                //    principal = decimal.Round((decimal)(principal - principalInterest), 2, MidpointRounding.AwayFromZero);
+                                //}                             
                                 decimal? interest =  decimal.Round((decimal)GetInterest(dt.loan_no), 2, MidpointRounding.AwayFromZero);
-                                decimal? additionalInterest =  decimal.Round((decimal)GetAdditionalInterest(dt.loan_no), 2, MidpointRounding.AwayFromZero);
+                                //decimal? additionalInterest =  decimal.Round((decimal)GetAdditionalInterest(dt.loan_no), 2, MidpointRounding.AwayFromZero);                              
+                                decimal? additionalInterest = decimal.Round((decimal)ComputeInterest(dt.loan_no, (decimal)dt.loan_interest_rate, dateVar), 2, MidpointRounding.AwayFromZero);
                                 interest = decimal.Round((decimal)(principalInterest + interest + additionalInterest), 2, MidpointRounding.AwayFromZero);
                                 decimal? payment = decimal.Round((decimal)GetPayments(dt.loan_no), 2, MidpointRounding.AwayFromZero);
 
@@ -105,7 +110,7 @@ namespace Lending_System.Controllers
                                         count += 1;
                                     }
                                     else if (GetInterestType(dt.loan_name) == "2")
-                                    {
+                                    {                                      
                                         receivablesList1.Add(new receivables { loanNo = dt.loan_no, customerName = dt.customer_name.ToString().ToUpperInvariant(), dueDate = String.Format("{0:MM/dd/yyyy}", dt.due_date), principal = String.Format("{0:n}", principal), interest = String.Format("{0:n}", interest), payment = String.Format("{0:n}", payment), balance = String.Format("{0:n}", balance) });
                                         Balance2 = Balance2 + balance;
                                         count1 += 1;
@@ -358,5 +363,108 @@ namespace Lending_System.Controllers
                 return interest_type;
             }
         }
+
+        //NEW ALGORYTHM
+        public DateTime? GetStartDateForComputationOfInterest(string id)
+        {
+            using (db = new db_lendingEntities())
+            {
+                DateTime? dateStart = null;
+                var result =
+                    from d in db.tbl_loan_ledger
+                    where d.loan_no.Equals(id)
+                    select d;
+
+                foreach (var data in result)
+                {
+                    switch (data.trans_type)
+                    {
+                        case "Beginning Balance":
+                            if (data.interest_type == "1")
+                            {
+                                dateStart = data.date_trans.Value.AddDays(1);
+                            }
+                            else if (data.interest_type == "2")
+                            {
+                                dateStart = data.date_trans.Value.AddDays(30);
+                            }
+                            break;
+                        case "Late Payment Interest":
+                            if (data.interest_type == "1")
+                            {
+                                dateStart = data.date_trans;
+                            }
+                            else if (data.interest_type == "2")
+                            {
+                                dateStart = data.date_trans;
+                            }
+                            break;
+                        default:
+                            dateStart = data.date_trans;
+                            break;
+                    }
+                }
+                return dateStart;
+            }
+        }
+
+        public decimal ComputeInterest(string id, decimal interestRate, DateTime testDate)
+        {
+            decimal computedInterest = 0;
+            decimal ledgerBalance = 0;
+            DateTime? dateStartOfComputation = DateTime.Now;
+            DateTime serverDate = testDate;
+            decimal noOfDays = 0;
+
+            try
+            {
+                using (db = new db_lendingEntities())
+                {
+                    dateStartOfComputation = GetStartDateForComputationOfInterest(id);
+                    ledgerBalance  = decimal.Round((decimal)GetLedgerBalance(id), 2, MidpointRounding.AwayFromZero);
+
+                    if (GetInterestType(id) == "1")
+                    {
+                        noOfDays = decimal.ToInt32((serverDate - dateStartOfComputation).Value.Days);
+                    }
+                    else
+                    {
+                        if (id == "2017-2-392")
+                        {
+                            var test = "";
+                        }
+
+                        if ((decimal.ToInt32((serverDate - dateStartOfComputation).Value.Days)) >= 1)
+                        {
+                            if ((decimal.ToInt32((serverDate - dateStartOfComputation).Value.Days)) == 1)
+                            {
+                                noOfDays = 1;
+                            }
+                            else
+                            {
+                                noOfDays = (serverDate - dateStartOfComputation).Value.Days;
+                                noOfDays = (noOfDays / 30) ;
+                                noOfDays =  decimal.Ceiling(noOfDays);
+                            }
+                        }
+                    }
+                    for (var c = 0; c < noOfDays; c++)
+                    {
+                        var interest = (ledgerBalance * (interestRate / 100));
+                        ledgerBalance =  decimal.Round((decimal)(ledgerBalance + interest), 2, MidpointRounding.AwayFromZero);
+                        computedInterest =  decimal.Round((decimal)(computedInterest + interest), 2, MidpointRounding.AwayFromZero);
+                    }
+                }
+
+                return computedInterest;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return computedInterest;
+        }
+
     }
 }

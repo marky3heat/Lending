@@ -661,7 +661,7 @@ namespace Lending_System.Areas.Administrator.Controllers
                     if (balance > 0)
                     {
                         var interestRate = (decimal)dt.loan_interest_rate;
-                        var noOfDays = 0;
+                        decimal noOfDays = 0;
                         var dateStart = GetInterestStartDate(dt.loan_no);
 
                         if (GetInterestType(dt.loan_name) == "1")
@@ -670,9 +670,22 @@ namespace Lending_System.Areas.Administrator.Controllers
                         }
                         else
                         {
-                            if ((decimal.ToInt32((_serverDateTime - dateStart).Value.Days)) >= 30)
+                            //if ((decimal.ToInt32((_serverDateTime - dateStart).Value.Days)) >= 30)
+                            //{
+                            //    noOfDays = (((_serverDateTime - dateStart).Value.Days)) / 30;
+                            //}
+                            if ((decimal.ToInt32((_serverDateTime - dateStart).Value.Days)) >= 1)
                             {
-                                noOfDays = (((_serverDateTime - dateStart).Value.Days)) / 30;
+                                if ((decimal.ToInt32((_serverDateTime - dateStart).Value.Days)) == 1)
+                                {
+                                    noOfDays = 1;
+                                }
+                                else
+                                {
+                                    noOfDays = (_serverDateTime - dateStart).Value.Days;
+                                    noOfDays = (noOfDays / 30);
+                                    noOfDays = decimal.Ceiling(noOfDays);
+                                }
                             }
                         }
                         decimal totalInterest = 0;

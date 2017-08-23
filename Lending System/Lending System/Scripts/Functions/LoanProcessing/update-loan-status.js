@@ -223,7 +223,7 @@ function CheckStatusForRelease(autonum) {
                 toastr.error('Already released.');
             }
             else {
-                AjaxRelease(autonum)
+                AjaxRelease(autonum);
             }
         },
         error: ""
@@ -233,7 +233,7 @@ function AjaxReview(id) {
     var myObj = {
         "status": "Reviewed",
         "reviewed_by_name": $('#txtreviewed_by_name').find('option:selected').text()
-    };
+};
 
     $.ajax({
         url: RootUrl + "LoanProcessing/Review?id=" + id,
@@ -257,8 +257,8 @@ function AjaxReview(id) {
 function AjaxApprove(id) {
     var myObj = {
         "status": "Approved",
-        "reviewed_by_name": $('#txtapproved_by_name').find('option:selected').text()
-    };
+        "approved_by_name": $('#txtapproved_by_name').find('option:selected').text()
+};
 
     $.ajax({
         url: RootUrl + "LoanProcessing/Approve?id=" + id,
