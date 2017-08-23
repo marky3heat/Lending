@@ -54,61 +54,71 @@ namespace Lending_System.Controllers
                         var result = from d in db.tbl_loan_processing where (d.due_date <= dateVar) && d.status == "Released" orderby d.customer_name ascending select d;
                         foreach (var dt in result)
                         {
-                            decimal adjustment = decimal.Round((decimal)GetAdjustment(dt.loan_no), 2, MidpointRounding.AwayFromZero);
-                            decimal? principal = decimal.Round((decimal)dt.loan_granted, 2, MidpointRounding.AwayFromZero);
-                            decimal? principalInterest = dt.loan_granted * (dt.loan_interest_rate/100);
-                            decimal? interest = GetInterest(dt.loan_no);
-                            decimal? additionalInterest = GetAdditionalInterest(dt.loan_no);
-                            interest = decimal.Round((decimal)(principalInterest+interest+additionalInterest), 2, MidpointRounding.AwayFromZero);
-                            decimal? payment = decimal.Round((decimal)GetPayments(dt.loan_no), 2, MidpointRounding.AwayFromZero);
-                            
-                            if (adjustment < 0)
+                            //if (dt.loan_no == "2017-1-156")
+                            //{
+                            //    var a = "";
+                            //}
+
+                            decimal ledgerBalance = decimal.Round((decimal)GetLedgerBalance(dt.loan_no), 2, MidpointRounding.AwayFromZero);
+
+                            if (ledgerBalance > 0)
                             {
-                                adjustment = adjustment * -1;
-                                if (adjustment >= interest)
+                                decimal adjustment = decimal.Round((decimal)GetAdjustment(dt.loan_no), 2, MidpointRounding.AwayFromZero);
+                                decimal? principal = decimal.Round((decimal)dt.loan_granted, 2, MidpointRounding.AwayFromZero);
+                                decimal? principalInterest =  decimal.Round((decimal)(dt.loan_granted * (dt.loan_interest_rate / 100)), 2, MidpointRounding.AwayFromZero);
+                                decimal? interest =  decimal.Round((decimal)GetInterest(dt.loan_no), 2, MidpointRounding.AwayFromZero);
+                                decimal? additionalInterest =  decimal.Round((decimal)GetAdditionalInterest(dt.loan_no), 2, MidpointRounding.AwayFromZero);
+                                interest = decimal.Round((decimal)(principalInterest + interest + additionalInterest), 2, MidpointRounding.AwayFromZero);
+                                decimal? payment = decimal.Round((decimal)GetPayments(dt.loan_no), 2, MidpointRounding.AwayFromZero);
+
+                                if (adjustment < 0)
                                 {
-                                    interest = 0;
-                                    adjustment = adjustment - (decimal) interest;
-                                    if (adjustment > 0 && principal > adjustment)
+                                    adjustment = adjustment * -1;
+                                    if (adjustment >= interest)
                                     {
-                                        principal = principal - adjustment;
-                                        adjustment = 0;
+                                        interest = 0;
+                                        adjustment = adjustment - (decimal)interest;
+                                        if (adjustment > 0 && principal > adjustment)
+                                        {
+                                            principal = principal - adjustment;
+                                            adjustment = 0;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        interest = interest - adjustment;
                                     }
                                 }
                                 else
                                 {
-                                    interest = interest - adjustment;
+                                    interest = interest + adjustment;
                                 }
-                            }
-                            else
-                            {
-                                interest = interest + adjustment;
-                            }
 
-                            decimal? balance = decimal.Round((decimal)(principal + interest - payment), 2, MidpointRounding.AwayFromZero);
+                                decimal? balance = decimal.Round((decimal)(principal + interest - payment), 2, MidpointRounding.AwayFromZero);
 
-                            if (balance > 0)
-                            {
-                                if (GetInterestType(dt.loan_name) == "1")
+                                if (balance > 0)
                                 {
-                                    receivablesList.Add(new receivables { loanNo = dt.loan_no, customerName = dt.customer_name.ToString().ToUpperInvariant(), dueDate = String.Format("{0:MM/dd/yyyy}", dt.due_date), principal = String.Format("{0:n}", principal), interest = String.Format("{0:n}", interest), payment = String.Format("{0:n}", payment), balance = String.Format("{0:n}", balance) });
-                                    Balance1 = Balance1 + balance;
-                                    count += 1;
+                                    if (GetInterestType(dt.loan_name) == "1")
+                                    {
+                                        receivablesList.Add(new receivables { loanNo = dt.loan_no, customerName = dt.customer_name.ToString().ToUpperInvariant(), dueDate = String.Format("{0:MM/dd/yyyy}", dt.due_date), principal = String.Format("{0:n}", principal), interest = String.Format("{0:n}", interest), payment = String.Format("{0:n}", payment), balance = String.Format("{0:n}", balance) });
+                                        Balance1 = Balance1 + balance;
+                                        count += 1;
+                                    }
+                                    else if (GetInterestType(dt.loan_name) == "2")
+                                    {
+                                        receivablesList1.Add(new receivables { loanNo = dt.loan_no, customerName = dt.customer_name.ToString().ToUpperInvariant(), dueDate = String.Format("{0:MM/dd/yyyy}", dt.due_date), principal = String.Format("{0:n}", principal), interest = String.Format("{0:n}", interest), payment = String.Format("{0:n}", payment), balance = String.Format("{0:n}", balance) });
+                                        Balance2 = Balance2 + balance;
+                                        count1 += 1;
+                                    }
+                                    else if (GetInterestType(dt.loan_name) != "1" && GetInterestType(dt.loan_name) != "2")
+                                    {
+                                        receivablesList2.Add(new receivables { loanNo = dt.loan_no, customerName = dt.customer_name.ToString().ToUpperInvariant(), dueDate = String.Format("{0:MM/dd/yyyy}", dt.due_date), principal = String.Format("{0:n}", principal), interest = String.Format("{0:n}", interest), payment = String.Format("{0:n}", payment), balance = String.Format("{0:n}", balance) });
+                                        Balance3 = Balance3 + balance;
+                                        count2 += 1;
+                                    }
+
+                                    totalBalance = totalBalance + balance;
                                 }
-                                else if (GetInterestType(dt.loan_name) == "2")
-                                {
-                                    receivablesList1.Add(new receivables { loanNo = dt.loan_no, customerName = dt.customer_name.ToString().ToUpperInvariant(), dueDate = String.Format("{0:MM/dd/yyyy}", dt.due_date), principal = String.Format("{0:n}", principal), interest = String.Format("{0:n}", interest), payment = String.Format("{0:n}", payment), balance = String.Format("{0:n}", balance) });
-                                    Balance2 = Balance2 + balance;
-                                    count1 += 1;
-                                }
-                                else if (GetInterestType(dt.loan_name) != "1" && GetInterestType(dt.loan_name) != "2")
-                                {
-                                    receivablesList2.Add(new receivables { loanNo = dt.loan_no, customerName = dt.customer_name.ToString().ToUpperInvariant(), dueDate = String.Format("{0:MM/dd/yyyy}", dt.due_date), principal = String.Format("{0:n}", principal), interest = String.Format("{0:n}", interest), payment = String.Format("{0:n}", payment), balance = String.Format("{0:n}", balance) });
-                                    Balance3 = Balance3 + balance;
-                                    count2 += 1;
-                                }
-                         
-                                totalBalance = totalBalance + balance;
                             }
                         }
 
@@ -214,11 +224,11 @@ namespace Lending_System.Controllers
                 {
                     if (data.TransType == "Debit memo")
                     {
-                        adjustment = adjustment + data.Amount;
+                        adjustment =  decimal.Round((decimal)(adjustment + data.Amount), 2, MidpointRounding.AwayFromZero);
                     }
                     else
                     {
-                        adjustment = adjustment - data.Amount;
+                        adjustment =  decimal.Round((decimal)(adjustment - data.Amount), 2, MidpointRounding.AwayFromZero);
                     }                  
                 }
                 return adjustment;
@@ -241,7 +251,7 @@ namespace Lending_System.Controllers
                     switch (data.trans_type)
                     {
                         case "Late Payment Interest":
-                            interest = interest + data.interest;
+                            interest = decimal.Round((decimal)(interest + data.interest), 2, MidpointRounding.AwayFromZero);
                             break;
                         default:
                             break;
@@ -288,10 +298,13 @@ namespace Lending_System.Controllers
                         {
                             var interest = (balance * (interestRate / 100));
                             balance = balance + interest;
-                            totalInterest = totalInterest + interest;
+                            totalInterest =  decimal.Round((decimal)(totalInterest + interest), 2, MidpointRounding.AwayFromZero);
                         }
                     }
                 }
+
+                totalInterest = decimal.Round((decimal)(totalInterest), 2, MidpointRounding.AwayFromZero);
+
                 return totalInterest;
             }
         }
