@@ -1,9 +1,9 @@
 ﻿function LoadPrint() {
-    window.location.href = RootUrl + "/Receivables/Print?date=" + $('#asOf').val();
+    window.location.href = RootUrl + "Receivables/Print?date=" + $('#asOf').val();
 }
 function LoadDetails(parameters) {
 
-    var url = RootUrl + "/Receivables/PrintDetails?date=" + parameters;
+    var url = RootUrl + "Receivables/PrintDetails?date=" + parameters;
     var encodedParam = encodeURIComponent(url);
 
     $('#report-body').load(url, function () { });
