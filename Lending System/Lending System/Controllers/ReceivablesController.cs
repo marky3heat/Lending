@@ -30,7 +30,7 @@ namespace Lending_System.Controllers
             }
         }
 
-        public ActionResult Print(string date)
+        public ActionResult Print(DateTime date)
         {
             if (Session["UserId"] != null)
             {
@@ -38,7 +38,8 @@ namespace Lending_System.Controllers
                 {
                     using (db = new db_lendingEntities())
                     {
-                        DateTime dateVar = DateTime.Parse(date);
+                        //DateTime dateVar = DateTime.Parse(date);
+                        DateTime dateVar = date;
                         decimal? totalBalance = 0;
                         decimal? Balance1 = 0;
                         decimal? Balance2 = 0;
