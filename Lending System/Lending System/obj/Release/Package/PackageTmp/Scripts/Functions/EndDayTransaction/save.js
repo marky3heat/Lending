@@ -11,14 +11,14 @@
         "cash_pulled_out": $('#txtcash_pulled_out').val(),
         "cash_end": $('#txtcash_end').val()
     };
-
+    debugger;
     $.ajax({
         url: RootUrl + "/EndDayTransaction/Save",
         type: "POST",
         data: JSON.stringify(myObj),
         contentType: 'application/json',
         success: function (response, status, xhr) {
-            if (response == "Success") {
+            if (response === "Success") {
                 toastr.success('Successfully saved.', 'Save');
                 List.InitializeEvents();
             }

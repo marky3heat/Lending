@@ -48,14 +48,6 @@
             contentType: 'application/json; charset=utf-8',
             success: function (result) {
                 if (result.success) {
-                    //swal("Success", result.message, "success",
-                  
-                    //        function (isConfirm) {
-                    //            if (isConfirm) {
-                    //                reloadPage();
-                    //            }
-                    //        }                    
-                    //    );    
 
                     swal({ title: "Success!", text: result.message, type: "success" }, function () { printReceipt('receipt'); });
 
@@ -180,7 +172,7 @@
     function printReceipt(divId) {
         setTimeout(function () {
             showPrintDialog(divId);
-        }, 500);
+        }, 800);
 
     }
     function showPrintDialog(divId) {

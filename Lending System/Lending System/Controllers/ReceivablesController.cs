@@ -39,7 +39,7 @@ namespace Lending_System.Controllers
                     using (db = new db_lendingEntities())
                     {
                         //DateTime dateVar = DateTime.Parse(date);
-                        DateTime dateVar = date;
+                        var dateVar = date;
                         decimal? totalBalance = 0;
                         decimal? Balance1 = 0;
                         decimal? Balance2 = 0;
@@ -368,49 +368,62 @@ namespace Lending_System.Controllers
         //NEW ALGORYTHM
         public DateTime? GetStartDateForComputationOfInterest(string id)
         {
-            using (db = new db_lendingEntities())
+            try
             {
-                DateTime? dateStart = null;
-                var result =
-                    from d in db.tbl_loan_ledger
-                    where d.loan_no.Equals(id)
-                    select d;
-
-                foreach (var data in result)
+                using (db = new db_lendingEntities())
                 {
-                    switch (data.trans_type)
+                   DateTime? dateStart = DateTime.Now;
+                    var result =
+                        from d in db.tbl_loan_ledger
+                        where d.loan_no.Equals(id)
+                        select d;
+
+                    foreach (var data in result)
                     {
-                        case "Beginning Balance":
-                            if (data.interest_type == "1")
-                            {
-                                dateStart = data.date_trans.Value.AddDays(1);
-                            }
-                            else if (data.interest_type == "2")
-                            {
-                                dateStart = data.date_trans.Value.AddDays(30);
-                            }
-                            break;
-                        case "Late Payment Interest":
-                            if (data.interest_type == "1")
-                            {
-                                dateStart = data.date_trans;
-                            }
-                            else if (data.interest_type == "2")
-                            {
-                                dateStart = data.date_trans;
-                            }
-                            break;
-                        default:
-                            dateStart = data.date_trans;
-                            break;
+                        switch (data.trans_type)
+                        {
+                            case "Beginning Balance":
+                                if (data.interest_type == "1")
+                                {
+                                    dateStart = data.date_trans.Value;
+                                    dateStart = dateStart.Value.AddDays(1);
+                                }
+                                else if (data.interest_type == "2")
+                                {
+                                    dateStart = data.date_trans.Value.AddDays(30);
+                                }
+                                break;
+                            case "Late Payment Interest":
+                                if (data.interest_type == "1")
+                                {
+                                    dateStart = data.date_trans.Value.AddDays(0);
+                                }
+                                else if (data.interest_type == "2")
+                                {
+                                    dateStart = data.date_trans.Value.AddDays(0);
+                                }
+                                break;
+                            default:
+                                dateStart = data.date_trans.Value.AddDays(0);
+                                break;
+                        }
                     }
+                    return dateStart;
                 }
-                return dateStart;
             }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }          
         }
 
         public decimal ComputeInterest(string id, decimal interestRate, DateTime testDate)
         {
+            if (id == "2017-1-388")
+            {
+                var test = "";
+            }
+
             decimal computedInterest = 0;
             decimal ledgerBalance = 0;
             DateTime? dateStartOfComputation = DateTime.Now;
@@ -463,8 +476,6 @@ namespace Lending_System.Controllers
             {
                 throw new Exception(ex.Message);
             }
-
-            return computedInterest;
         }
 
     }
