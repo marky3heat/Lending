@@ -111,13 +111,15 @@ namespace Lending_System.Controllers
                                         count += 1;
                                     }
                                     else if (GetInterestType(dt.loan_name) == "2")
-                                    {                                      
+                                    {
+                                        balance = balance - principalInterest;
                                         receivablesList1.Add(new receivables { loanNo = dt.loan_no, customerName = dt.customer_name.ToString().ToUpperInvariant(), dueDate = String.Format("{0:MM/dd/yyyy}", dt.due_date), principal = String.Format("{0:n}", principal), interest = String.Format("{0:n}", interest), payment = String.Format("{0:n}", payment), balance = String.Format("{0:n}", balance) });
                                         Balance2 = Balance2 + balance;
                                         count1 += 1;
                                     }
                                     else if (GetInterestType(dt.loan_name) != "1" && GetInterestType(dt.loan_name) != "2")
                                     {
+                                        balance = balance - principalInterest;
                                         receivablesList2.Add(new receivables { loanNo = dt.loan_no, customerName = dt.customer_name.ToString().ToUpperInvariant(), dueDate = String.Format("{0:MM/dd/yyyy}", dt.due_date), principal = String.Format("{0:n}", principal), interest = String.Format("{0:n}", interest), payment = String.Format("{0:n}", payment), balance = String.Format("{0:n}", balance) });
                                         Balance3 = Balance3 + balance;
                                         count2 += 1;
@@ -458,7 +460,7 @@ namespace Lending_System.Controllers
                             {
                                 noOfDays = (serverDate - dateStartOfComputation).Value.Days;
                                 noOfDays = (noOfDays / 30) ;
-                                noOfDays =  decimal.Ceiling(noOfDays);
+                                noOfDays =  decimal.Ceiling(noOfDays) - 1;
                             }
                         }
                     }
