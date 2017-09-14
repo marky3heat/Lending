@@ -1,7 +1,11 @@
 ﻿$(document).ready(function () {
     $("#btnnext").click(function () {
-        if ($('#txtloan_granted').val() == 0) {
+        debugger;
+        if ($('#txtloan_granted').val() === 0 || $('#txtloan_granted').val() === "") {
             alert("Please input loan amount.");
+        }
+        else if ($('#txtloantype_id').val() === 0 || $('#txtloantype_id').val() === "") {
+            alert("Please input loan type.");
         }
         else {
             CreateSchedule();

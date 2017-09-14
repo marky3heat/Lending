@@ -409,10 +409,21 @@ namespace Lending_System.Areas.Administrator.Controllers
                             break;
                     }
 
-                    if (data.date_trans.Value.Day == _serverDateTime.Day && data.date_trans.Value.DayOfYear == _serverDateTime.DayOfYear)
+                    if (data.interest_type == "1")
                     {
-                        found = true;
+                        if (data.date_trans.Value.Day == _serverDateTime.Day && data.date_trans.Value.DayOfYear == _serverDateTime.DayOfYear)
+                        {
+                            found = true;
+                        }
                     }
+                    else
+                    {
+                        if (data.date_trans.Value.Day == _serverDateTime.Day && data.date_trans.Value.DayOfYear == _serverDateTime.DayOfYear)
+                        {
+                            found = true;
+                        }
+                    }
+
                 }
                 if (found)
                 {
@@ -664,6 +675,8 @@ namespace Lending_System.Areas.Administrator.Controllers
                         decimal noOfDays = 0;
                         var dateStart = GetInterestStartDate(dt.loan_no);
 
+                        var skipIinterest = false;
+
                         if (GetInterestType(dt.loan_name) == "1")
                         {
                             noOfDays = decimal.ToInt32((_serverDateTime - dateStart).Value.Days);
@@ -678,6 +691,11 @@ namespace Lending_System.Areas.Administrator.Controllers
                             {
                                 if ((decimal.ToInt32((_serverDateTime - dateStart).Value.Days)) == 1)
                                 {
+                                    if (NoOfInterest(dt.loan_no) >=
+                                        (decimal.ToInt32((_serverDateTime - dateStart).Value.Days)))
+                                    {
+                                        skipIinterest = true;
+                                    }
                                     noOfDays = 1;
                                 }
                                 else
@@ -685,6 +703,10 @@ namespace Lending_System.Areas.Administrator.Controllers
                                     noOfDays = (_serverDateTime - dateStart).Value.Days;
                                     noOfDays = (noOfDays / 30);
                                     noOfDays = decimal.Ceiling(noOfDays);
+                                    if (NoOfInterest(dt.loan_no) >= noOfDays)
+                                    {
+                                        skipIinterest = true;
+                                    }
                                 }
                             }
                         }
@@ -695,29 +717,31 @@ namespace Lending_System.Areas.Administrator.Controllers
                             balance = balance + interest;
                             totalInterest = totalInterest + interest;
                         }
+                        if (skipIinterest == false)
+                        {
+                            db_lendingEntities dbSave = new db_lendingEntities();
+                            tbl_loan_ledger tbl = new tbl_loan_ledger();
 
-                        db_lendingEntities dbSave = new db_lendingEntities();
-                        tbl_loan_ledger tbl = new tbl_loan_ledger();
+                            tbl.date_trans = _serverDateTime;
+                            tbl.trans_type = "Late Payment Interest";
+                            tbl.reference_no = "";
+                            tbl.loan_no = dt.loan_no;
+                            tbl.loan_type_name = dt.loan_name;
+                            tbl.customer_id = dt.customer_id;
+                            tbl.customer_name = dt.customer_name;
+                            tbl.interest_type = GetInterestType(dt.loan_name);
+                            tbl.interest_rate = dt.loan_interest_rate;
+                            tbl.interest = totalInterest;
+                            tbl.amount_paid = 0;
+                            tbl.principal = 0;
+                            tbl.balance = 0;
+                            tbl.date_created = DateTime.Now;
+                            tbl.created_by = Session["UserName"].ToString();
 
-                        tbl.date_trans = _serverDateTime;
-                        tbl.trans_type = "Late Payment Interest";
-                        tbl.reference_no = "";
-                        tbl.loan_no = dt.loan_no;
-                        tbl.loan_type_name = dt.loan_name;
-                        tbl.customer_id = dt.customer_id;
-                        tbl.customer_name = dt.customer_name;
-                        tbl.interest_type = GetInterestType(dt.loan_name);
-                        tbl.interest_rate = dt.loan_interest_rate;
-                        tbl.interest = totalInterest;
-                        tbl.amount_paid = 0;
-                        tbl.principal = 0;
-                        tbl.balance = 0;
-                        tbl.date_created = DateTime.Now;
-                        tbl.created_by = Session["UserName"].ToString();
+                            dbSave.tbl_loan_ledger.Add(tbl);
 
-                        dbSave.tbl_loan_ledger.Add(tbl);
-
-                        dbSave.SaveChanges();
+                            dbSave.SaveChanges();
+                        }
                     }
                 }
             }
@@ -765,6 +789,49 @@ namespace Lending_System.Areas.Administrator.Controllers
                 }
                 return dateStart;
             }
+        }
+
+        public decimal? NoOfInterest(string id)
+        {
+            var noOfInterest = 0;
+            using (db = new db_lendingEntities())
+            {
+                
+                var result =
+                    from d in db.tbl_loan_ledger
+                    where d.loan_no.Equals(id)
+                    orderby (d.autonum)
+                    select d;
+
+                foreach (var data in result)
+                {
+                    switch (data.trans_type)
+                    {
+                        case "Beginning Balance":
+
+                            break;
+                        case "Late Payment Interest":
+                            noOfInterest = noOfInterest + 1;
+                            break;
+                        case "OR Payment":
+
+                            break;
+                        case "OR Payment Interest":
+
+                            break;
+                        case "Debit memo":
+
+                            break;
+                        case "Credit memo":
+
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            return noOfInterest;
         }
         #endregion
     }
