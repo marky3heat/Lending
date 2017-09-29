@@ -28,150 +28,117 @@ namespace Lending_System.Controllers
                 return RedirectToAction("Login", "Account");
             }
         }
-        public ActionResult LoadList()
-        {
-            var datetimenow = DateTime.Now;
-            var datenow = datetimenow.Date;
 
-            try
-            {
-                using (db_lendingEntities db = new db_lendingEntities())
-                {
-
-                    var data = db.tbl_loan_processing.Where(a => ((a.loan_date <= datenow) || (a.loan_date >= datenow && a.loan_date <= datenow)) && (a.status != "Released" && a.status != "Approved")).ToList();
-
-                    return Json(new { data = data }, JsonRequestBehavior.AllowGet);
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        public JsonResult GetCashRelease()
+        public JsonResult LoadDashboard()
         {
             try
             {
-                var datetimenow = DateTime.Now;
-                var datenow = datetimenow.Date;
-                decimal balance = 0;
-                db_lendingEntities db = new db_lendingEntities();
-                {
-
-                    var result = from d in db.tbl_loan_processing where d.status.Contains("Released") && (d.loan_date >= datenow && d.loan_date <= datenow) orderby d.autonum ascending select d;
-                    if (result != null)
-                    {
-                        foreach (var data in result)
-                        {
-                            balance = balance + (decimal)data.net_proceeds;
-                        }
-                    }
-                    balance = decimal.Round((decimal)balance, 2, MidpointRounding.AwayFromZero);
-                }
-                var strBalance = balance.ToString("0.00");
-                return Json(strBalance, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                return Json("Failed", JsonRequestBehavior.DenyGet);
-                throw ex;
-            }
-        }
-        public JsonResult GetCashCollect()
-        {
-            try
-            {
-                var datetimenow = DateTime.Now;
-                var datenow = datetimenow.Date;
-                decimal balance = 0;
-                db_lendingEntities db = new db_lendingEntities();
-                {
-
-                    var result = from d in db.tbl_payment where (d.date_trans >= datenow && d.date_trans <= datenow) orderby d.autonum ascending select d;
-                    if (result != null)
-                    {
-                        foreach (var data in result)
-                        {
-                            balance = balance + (decimal)data.total_amount;
-                        }
-                    }
-                    balance = decimal.Round((decimal)balance, 2, MidpointRounding.AwayFromZero);
-                }
-
-                var strBalance = balance.ToString("0.00");
-                return Json(strBalance, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                return Json("Failed", JsonRequestBehavior.DenyGet);
-                throw ex;
-            }
-        }
-        public JsonResult GetCashPullOut()
-        {
-            try
-            {
-                var datetimenow = DateTime.Now;
-                var datenow = datetimenow.Date;
-                decimal balance = 0;
-                db_lendingEntities db = new db_lendingEntities();
-                {
-
-                    var result = from d in db.tbl_cash_out where (d.date_trans >= datenow && d.date_trans <= datenow) orderby d.autonum ascending select d;
-                    if (result != null)
-                    {
-                        foreach (var data in result)
-                        {
-                            balance = balance + (decimal)data.amount;
-                        }
-                    }
-                }
-
-                var strBalance = balance;
-                return Json(strBalance, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                return Json("Failed", JsonRequestBehavior.DenyGet);
-                throw ex;
-            }
-        }
-        public JsonResult GetReceivablesForTheDay()
-        {
-            try
-            {
-                decimal? totalBalance = 0;
                 using (db = new db_lendingEntities())
                 {
-                    DateTime dateVar = _serverDateTime;
+                    var datetimenow = DateTime.Now;
+                    var datenow = datetimenow.Date;
 
-                    var result = from d in db.tbl_loan_processing where (d.due_date <= dateVar) && d.status == "Released" orderby d.customer_name ascending select new { d.loan_no, d.loan_granted, d.loan_interest_rate };
+                    decimal CashReleased = 0;
+                    var listCashReleased =
+                        from d in db.tbl_loan_processing
+                        where (d.loan_date >= datenow && d.loan_date <= datenow)
+                        && d.status.Equals("Released")
+                        select d.net_proceeds;
+                    CashReleased = listCashReleased.AsEnumerable().Sum(o => o.Value);
+
+                    decimal CashCollected = 0;
+                    var listCashCollected =
+                        from d in db.tbl_payment
+                        where (d.date_trans >= datenow && d.date_trans <= datenow)
+                        select d.total_amount;
+                    CashCollected = listCashCollected.AsEnumerable().Sum(o => o.Value);
+
+
+
+                    return Json(CashReleased, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+           
+        }
+
+        public decimal? GetReceivables()
+        {
+            try
+            {
+                using (db = new db_lendingEntities())
+                {
+                    var dateVar = DateTime.Now;
+                    decimal? totalBalance = 0;
+
+                    var result = from d in db.tbl_loan_processing where (d.due_date <= dateVar) && d.status == "Released" orderby d.customer_name ascending select d;
                     foreach (var dt in result)
                     {
-                        decimal? principal = decimal.Round((decimal)dt.loan_granted, 2, MidpointRounding.AwayFromZero);
-                        decimal? principalInterest = dt.loan_granted * (dt.loan_interest_rate / 100);
-                        decimal? interest = GetInterest(dt.loan_no);
-                        decimal? additionalInterest = GetAdditionalInterest(dt.loan_no);
-                        interest = decimal.Round((decimal)(principalInterest + interest + additionalInterest), 2, MidpointRounding.AwayFromZero);
-                        decimal? payment = decimal.Round((decimal)GetPayments(dt.loan_no), 2, MidpointRounding.AwayFromZero);
-                        decimal? balance = decimal.Round((decimal)(principal + interest - payment), 2, MidpointRounding.AwayFromZero);
+                        decimal ledgerBalance = decimal.Round((decimal)GetLedgerBalance(dt.loan_no), 2, MidpointRounding.AwayFromZero);
 
-                        if (balance > 0)
+                        if (ledgerBalance > 0)
                         {
-                            totalBalance = totalBalance + balance;
+                            decimal adjustment = decimal.Round((decimal)GetAdjustment(dt.loan_no), 2, MidpointRounding.AwayFromZero);
+                            decimal? principal = decimal.Round((decimal)dt.loan_granted, 2, MidpointRounding.AwayFromZero);
+                            decimal? principalInterest = decimal.Round((decimal)(dt.loan_granted * (dt.loan_interest_rate / 100)), 2, MidpointRounding.AwayFromZero);                             
+                            decimal? interest = decimal.Round((decimal)GetInterest(dt.loan_no), 2, MidpointRounding.AwayFromZero);                             
+                            decimal? additionalInterest = decimal.Round((decimal)ComputeInterest(dt.loan_no, (decimal)dt.loan_interest_rate, dateVar), 2, MidpointRounding.AwayFromZero);
+                            interest = decimal.Round((decimal)(principalInterest + interest + additionalInterest), 2, MidpointRounding.AwayFromZero);
+                            decimal? payment = decimal.Round((decimal)GetPayments(dt.loan_no), 2, MidpointRounding.AwayFromZero);
+
+                            if (adjustment < 0)
+                            {
+                                adjustment = adjustment * -1;
+                                if (adjustment >= interest)
+                                {
+                                    interest = 0;
+                                    adjustment = adjustment - (decimal)interest;
+                                    if (adjustment > 0 && principal > adjustment)
+                                    {
+                                        principal = principal - adjustment;
+                                        adjustment = 0;
+                                    }
+                                }
+                                else
+                                {
+                                    interest = interest - adjustment;
+                                }
+                            }
+                            else
+                            {
+                                interest = interest + adjustment;
+                            }
+
+                            decimal? balance = decimal.Round((decimal)(principal + interest - payment), 2, MidpointRounding.AwayFromZero);
+
+                            if (balance > 0)
+                            {
+                                if (GetInterestType(dt.loan_name) == "1")
+                                {
+                                }
+                                else if (GetInterestType(dt.loan_name) == "2")
+                                {
+                                    balance = balance - principalInterest;
+                                }
+                                else if (GetInterestType(dt.loan_name) != "1" && GetInterestType(dt.loan_name) != "2")
+                                {
+                                    balance = balance - principalInterest;
+                                }
+
+                                totalBalance = totalBalance + balance;
+                            }
                         }
                     }
-
-                    ViewBag.totalBalance = decimal.Round((decimal)totalBalance, 2, MidpointRounding.AwayFromZero);
-                    ViewBag.totalBalance = String.Format("{0:0.00}", ViewBag.totalBalance);
+                    return totalBalance;
                 }
-
-                return Json(ViewBag.totalBalance, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         public decimal? GetLedgerBalance(string id)
@@ -182,6 +149,7 @@ namespace Lending_System.Controllers
                 var result =
                     from d in db.tbl_loan_ledger
                     where d.loan_no.Equals(id)
+                    orderby d.autonum
                     select d;
 
                 foreach (var data in result)
@@ -200,6 +168,12 @@ namespace Lending_System.Controllers
                         case "OR Payment Interest":
                             balance = balance - decimal.Round((decimal)data.interest, 2, MidpointRounding.AwayFromZero);
                             break;
+                        case "Debit memo":
+                            balance = balance + decimal.Round((decimal)data.interest, 2, MidpointRounding.AwayFromZero);
+                            break;
+                        case "Credit memo":
+                            balance = balance - decimal.Round((decimal)data.interest, 2, MidpointRounding.AwayFromZero);
+                            break;
                         default:
                             break;
                     }
@@ -207,19 +181,25 @@ namespace Lending_System.Controllers
                 return balance;
             }
         }
-        public decimal GetPayments(string id)
+        public decimal? GetAdjustment(string id)
         {
 
             db = new db_lendingEntities();
             {
-                decimal balance = 0;
-                var result = from d in db.tbl_payment_details where d.loan_no.Equals(id) select d.amount;
+                decimal? adjustment = 0;
+                var result = from d in db.tbl_adjustment where d.LoanNo.Equals(id) orderby d.Autonum select d;
                 foreach (var data in result)
                 {
-                    balance = balance + decimal.Round((decimal)data.Value, 2, MidpointRounding.AwayFromZero);
+                    if (data.TransType == "Debit memo")
+                    {
+                        adjustment = decimal.Round((decimal)(adjustment + data.Amount), 2, MidpointRounding.AwayFromZero);
+                    }
+                    else
+                    {
+                        adjustment = decimal.Round((decimal)(adjustment - data.Amount), 2, MidpointRounding.AwayFromZero);
+                    }
                 }
-
-                return balance;
+                return adjustment;
             }
         }
         public decimal? GetInterest(string id)
@@ -231,6 +211,7 @@ namespace Lending_System.Controllers
                 var result =
                     from d in db.tbl_loan_ledger
                     where d.loan_no.Equals(id)
+                    orderby d.autonum
                     select d;
 
                 foreach (var data in result)
@@ -238,7 +219,7 @@ namespace Lending_System.Controllers
                     switch (data.trans_type)
                     {
                         case "Late Payment Interest":
-                            interest = interest + decimal.Round((decimal)data.interest, 2, MidpointRounding.AwayFromZero);
+                            interest = decimal.Round((decimal)(interest + data.interest), 2, MidpointRounding.AwayFromZero);
                             break;
                         default:
                             break;
@@ -247,82 +228,109 @@ namespace Lending_System.Controllers
                 return interest;
             }
         }
-        public decimal GetAdditionalInterest(string id)
+        public decimal ComputeInterest(string id, decimal interestRate, DateTime testDate)
         {
-            using (db = new db_lendingEntities())
+            decimal computedInterest = 0;
+            decimal ledgerBalance = 0;
+            DateTime? dateStartOfComputation = DateTime.Now;
+            DateTime serverDate = testDate;
+            decimal noOfDays = 0;
+
+            try
             {
-                decimal totalInterest = 0;
-                var result =
-                    from d in db.tbl_loan_processing
-                    where d.loan_no == id
-                          && d.status == "Released"
-                          && d.due_date < _serverDateTime
-                    select d;
-                foreach (var dt in result)
+                using (db = new db_lendingEntities())
                 {
-                    var balance = (decimal)GetLedgerBalance(dt.loan_no);
+                    dateStartOfComputation = GetStartDateForComputationOfInterest(id);
+                    ledgerBalance = decimal.Round((decimal)GetLedgerBalance(id), 2, MidpointRounding.AwayFromZero);
 
-                    if (balance > 0)
+                    if (GetInterestType(id) == "1")
                     {
-                        var interestRate = (decimal)dt.loan_interest_rate;
-                        var noOfDays = 0;
-                        var dateStart = GetInterestStartDate(dt.loan_no);
-
-                        if (GetInterestType(dt.loan_name) == "1")
+                        noOfDays = decimal.ToInt32((serverDate - dateStartOfComputation).Value.Days);
+                    }
+                    else
+                    {
+                        if (id == "2017-2-392")
                         {
-                            noOfDays = decimal.ToInt32((_serverDateTime - dateStart).Value.Days);
+                            var test = "";
                         }
-                        else
+
+                        if ((decimal.ToInt32((serverDate - dateStartOfComputation).Value.Days)) >= 1)
                         {
-                            if ((decimal.ToInt32((_serverDateTime - dateStart).Value.Days)) >= 30)
+                            if ((decimal.ToInt32((serverDate - dateStartOfComputation).Value.Days)) == 1)
                             {
-                                noOfDays = (((_serverDateTime - dateStart).Value.Days)) / 30;
+                                noOfDays = 1;
+                            }
+                            else
+                            {
+                                noOfDays = (serverDate - dateStartOfComputation).Value.Days;
+                                noOfDays = (noOfDays / 30);
+                                noOfDays = decimal.Ceiling(noOfDays) - 1;
                             }
                         }
-
-                        for (var c = 0; c < noOfDays; c++)
-                        {
-                            var interest = (balance * (interestRate / 100));
-                            balance = balance + interest;
-                            totalInterest = totalInterest + interest;
-                        }
+                    }
+                    for (var c = 0; c < noOfDays; c++)
+                    {
+                        var interest = (ledgerBalance * (interestRate / 100));
+                        ledgerBalance = decimal.Round((decimal)(ledgerBalance + interest), 2, MidpointRounding.AwayFromZero);
+                        computedInterest = decimal.Round((decimal)(computedInterest + interest), 2, MidpointRounding.AwayFromZero);
                     }
                 }
-                return totalInterest;
+
+                return computedInterest;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
-        public DateTime? GetInterestStartDate(string id)
+        public DateTime? GetStartDateForComputationOfInterest(string id)
         {
-            using (db = new db_lendingEntities())
+            try
             {
-                DateTime? dateStart = null;
-                var result =
-                    from d in db.tbl_loan_ledger
-                    where d.loan_no.Equals(id)
-                    select d;
-
-                foreach (var data in result)
+                using (db = new db_lendingEntities())
                 {
-                    switch (data.trans_type)
+                    DateTime? dateStart = DateTime.Now;
+                    var result =
+                        from d in db.tbl_loan_ledger
+                        where d.loan_no.Equals(id)
+                        select d;
+
+                    foreach (var data in result)
                     {
-                        case "Beginning Balance":
-                            if (data.interest_type == "1")
-                            {
-                                dateStart = data.date_trans.Value.AddDays(1);
-                            }
-                            else if (data.interest_type == "2")
-                            {
-                                dateStart = data.date_trans.Value.AddDays(30);
-                            }
-                            break;
-                        case "Late Payment Interest":
-                            dateStart = data.date_trans;
-                            break;
-                        default:
-                            break;
+                        switch (data.trans_type)
+                        {
+                            case "Beginning Balance":
+                                if (data.interest_type == "1")
+                                {
+                                    dateStart = data.date_trans.Value;
+                                    dateStart = dateStart.Value.AddDays(1);
+                                }
+                                else if (data.interest_type == "2")
+                                {
+                                    dateStart = data.date_trans.Value.AddDays(30);
+                                }
+                                break;
+                            case "Late Payment Interest":
+                                if (data.interest_type == "1")
+                                {
+                                    dateStart = data.date_trans.Value.AddDays(0);
+                                }
+                                else if (data.interest_type == "2")
+                                {
+                                    dateStart = data.date_trans.Value.AddDays(0);
+                                }
+                                break;
+                            default:
+                                dateStart = data.date_trans.Value.AddDays(0);
+                                break;
+                        }
                     }
+                    return dateStart;
                 }
-                return dateStart;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
         public string GetInterestType(string id)
@@ -338,6 +346,21 @@ namespace Lending_System.Controllers
                 }
 
                 return interest_type;
+            }
+        }
+        public decimal GetPayments(string id)
+        {
+
+            db = new db_lendingEntities();
+            {
+                decimal balance = 0;
+                var result = from d in db.tbl_payment_details where d.loan_no.Equals(id) select d.amount;
+                foreach (var data in result)
+                {
+                    balance = balance + data.Value;
+                }
+
+                return balance;
             }
         }
     }

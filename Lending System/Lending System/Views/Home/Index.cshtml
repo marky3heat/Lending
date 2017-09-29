@@ -3,9 +3,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@Scripts.Render("~/Scripts/Functions/Home/initialize.js")
-@Scripts.Render("~/Scripts/Functions/Home/functions.js")
-
 <div class="panel panel-flat">
     <div class="panel-heading">
         <h4 class="panel-title"><strong>Welcome @Session["UserName"].ToString()!</strong></h4>
@@ -44,3 +41,5 @@
     </div>
 </div>
 
+@Scripts.Render("~/Scripts/Functions/Home/initialize.js")
+@Scripts.Render("~/Scripts/Functions/Home/functions.js")

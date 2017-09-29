@@ -3476,6 +3476,8 @@
     <Content Include="Scripts\Functions\EndDayTransaction\save.js" />
     <Content Include="Scripts\Functions\EndDayTransaction\variables.js" />
     <Content Include="Scripts\Functions\Home\functions.js" />
+    <Content Include="Scripts\Functions\Home\home.model.js" />
+    <Content Include="Scripts\Functions\Home\home.viewmodel.js" />
     <Content Include="Scripts\Functions\Home\initialize.js" />
     <Content Include="Scripts\Functions\LoanLedger\functions.js" />
     <Content Include="Scripts\Functions\LoanLedger\LoadLoanList.js" />

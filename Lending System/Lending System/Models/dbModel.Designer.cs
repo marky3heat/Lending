@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\MLGS\Work\Active Work\Lending\Lending System\Lending System\Models\dbModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\SERVER\Documents\GitHub\Lending\Lending System\Lending System\Models\dbModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
