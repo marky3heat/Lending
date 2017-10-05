@@ -773,7 +773,6 @@ D:\MLGS\Work\Active Work\Lending\Lending System\Lending System\bin\System.Web.Ra
 D:\MLGS\Work\Active Work\Lending\Lending System\Lending System\bin\System.Web.WebPages.xml
 D:\MLGS\Work\Active Work\Lending\Lending System\Lending System\bin\System.Web.WebPages.Deployment.xml
 D:\MLGS\Work\Active Work\Lending\Lending System\Lending System\bin\System.Web.WebPages.Razor.xml
-D:\MLGS\Work\Active Work\Lending\Lending System\Lending System\obj\Debug\Lending System.csprojResolveAssemblyReference.cache
 D:\MLGS\Work\Active Work\Lending\Lending System\Lending System\obj\Debug\Lending System.dll
 D:\MLGS\Work\Active Work\Lending\Lending System\Lending System\obj\Debug\Lending System.pdb
 D:\Work\Repository\Lending\Lending System\Lending System\bin\ApplicationInsights.config

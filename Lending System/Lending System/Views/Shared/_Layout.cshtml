@@ -28,8 +28,7 @@
     <!-- /Sweet Alert css -->
     @Styles.Render("~/bundles/toastr-style")
 
-    @*@RenderSection("styles", required: false)
-    @RenderSection("scripts", required: false)*@
+    @RenderSection("styles", required: false)
 
     <!-- knockout js references -->
     @Scripts.Render("~/bundles/knockoutjs")
@@ -72,6 +71,14 @@
     <!-- Toastr js -->
     @Scripts.Render("~/bundles/toastr-script")
     <!-- /Toastr js -->
+
+    <script type="text/javascript">
+        var Released = '@Session["Released"]';
+        var Collection = '@Session["Collection"]';
+        var Receivables = '@Session["Receivables"]';
+    </script> 
+
+    @RenderSection("scripts", required: false)
 
     <link rel="icon" href="~/favicon.ico" type="image/x-icon" />
     <style>

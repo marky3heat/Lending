@@ -56,3 +56,26 @@ app.createCollectionModel = function () {
 
     return self;
 };
+
+app.reprint = function () {
+    "use strict";
+
+    var self = this;
+
+    // #region MODEL TO CREATE/UPDATE
+    self.ReceiptNo = ko.observable();
+    self.Date = ko.observable();
+    self.Borrower = ko.observable();
+    self.IdNo = ko.observable();
+    self.principalReference = ko.observable();
+    self.principalParticulars = ko.observable();
+    self.principalAmount = ko.observable();
+    self.interestReference = ko.observable();
+    self.interestParticulars = ko.observable();
+    self.interestAmount = ko.observable();
+    self.balancLoanNo = ko.observable();
+    self.balanceAmount = ko.observable();
+    // #endregion   
+
+    return self;
+};

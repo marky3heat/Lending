@@ -1,6 +1,7 @@
 ﻿app.vm = (function() {
     //"use strict";
     var forSaveingModel = new app.createCollectionModel();
+    var sreprint = new app.reprint();
 
     // #region CONTROLS                
     var isPaymentListShowed = ko.observable(true);
@@ -101,7 +102,7 @@
                             '<li class="dropdown">' +
                             '<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>' +
                             '<ul class="dropdown-menu dropdown-menu-right">' +
-                            '<li><a href="#"><i class="icon-file-stats"></i> View receipt</a></li>' +
+                            '<li><button class="btn btn-link" style="text-align: center" onclick = "app.vm.reprint(' + row.autonum + ')"><i class="icon-file-stats"></i> View receipt</a></li>' +
                             '</ul>' +
                             '</li>' +
                             '</ul>';
@@ -168,6 +169,45 @@
         $('#balancLoanNo').html(forSaveingModel.LoanNo);
         $('#balanceAmount').html($('#Change').val());
     };
+    
+    function reprint(id) {
+        setTimeout(function () {
+            $.getJSON(RootUrl + "Administrator/Collection/LoadReprintDetails?id=" + id, function (result) {
+                sreprint.ReceiptNo(result[0].ReceiptNo);
+                sreprint.Date(result[0].Date);
+                sreprint.Borrower(result[0].Borrower);
+                sreprint.IdNo(result[0].IdNo);
+                sreprint.principalReference(result[0].principalReference);
+                sreprint.principalParticulars(result[0].principalParticulars);
+                sreprint.principalAmount(result[0].principalAmount);
+                sreprint.interestReference(result[0].interestReference);
+                sreprint.interestParticulars(result[0].interestParticulars);
+                sreprint.interestAmount(result[0].interestAmount);
+                sreprint.balancLoanNo(result[0].balancLoanNo);
+                sreprint.balanceAmount(result[0].balanceAmount);
+
+                $('#rReceiptNo').html(result[0].ReceiptNo);
+                $('#rDate').html(result[0].Date);
+                $('#rBorrower').html(result[0].Borrower);
+                $('#rIdNo').html(result[0].IdNo);
+
+                $('#rprincipalReference').html(result[0].principalReference);
+                $('#rprincipalParticulars').html(result[0].principalParticulars);
+                $('#rprincipalAmount').html(result[0].principalAmount);
+                $('#rinterestReference').html(result[0].interestReference);
+                $('#rinterestParticulars').html(result[0].interestParticulars);
+                $('#rinterestAmount').html(result[0].interestAmount);
+
+                $('#rbalancLoanNo').html(result[0].balancLoanNo);
+                $('#rbalanceAmount').html(result[0].balanceAmount);
+            });
+        }, 300);
+
+        setTimeout(function () {
+
+            $('#Reprint').appendTo("body").modal('show');
+        }, 1000);
+    }
 
     function printReceipt(divId) {
         setTimeout(function () {
@@ -360,7 +400,9 @@
         forSaveingModel: forSaveingModel,
         clearControls: clearControls,
         generatePrintValues: generatePrintValues,
-        printReceipt: printReceipt
+        printReceipt: printReceipt,
+        reprint: reprint,
+        sreprint: sreprint
     };
     return vm;
 

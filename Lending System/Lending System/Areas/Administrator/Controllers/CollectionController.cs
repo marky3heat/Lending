@@ -355,6 +355,81 @@ namespace Lending_System.Areas.Administrator.Controllers
             }
         }
 
+        public ActionResult LoadReprintDetails(int id)
+        {
+            try
+            {
+                using (db = new db_lendingEntities())
+                {
+                    var ReceiptNo = "";
+                    var Date = "";
+                    var Borrower = "";
+                    var IdNo = "";
+                    var principalReference = "";
+                    var principalParticulars = "";
+                    var principalAmount = "";
+                    var interestReference = "";
+                    var interestParticulars = "";
+                    var interestAmount = "";
+                    var balancLoanNo = "";
+                    var balanceAmount = "";
+
+
+                    var result = from d in db.tbl_payment where d.autonum == id select d;
+                    foreach (var dt in result)
+                    {
+                        ReceiptNo = dt.reference_no;
+                        Date = dt.date_trans.ToString();
+                        Borrower = dt.payor_name;
+                        IdNo = dt.payor_id.ToString();
+                    }
+
+                    var result1 = from d in db.tbl_payment_details where d.reference_no == ReceiptNo && d.payment_type == "OR Payment" select d;
+                    foreach (var dt in result1)
+                    {
+                        principalReference = dt.reference_no.ToString();
+                        principalParticulars = "Principal payment";
+                        principalAmount = String.Format("{0:n}", dt.amount);
+                        balancLoanNo = dt.loan_no;
+                    }
+
+                    var result2 = from d in db.tbl_payment_details where d.reference_no == ReceiptNo && d.payment_type == "OR Payment Interest" select d;
+                    foreach (var dt in result2)
+                    {
+                        interestReference = dt.reference_no.ToString();
+                        interestParticulars = "Interest payment";
+                        interestAmount = String.Format("{0:n}", dt.amount);
+                        balancLoanNo = dt.loan_no;
+                    }
+
+                    balanceAmount =  String.Format("{0:n}", DisplayLedgerBalance(balancLoanNo, ReceiptNo));
+
+                    List<DetailsForReprintModel> list = new List<DetailsForReprintModel>();
+                    list.Add(new DetailsForReprintModel
+                    {
+                        ReceiptNo = "Receipt No: " + ReceiptNo,
+                        Date = "Date: " + Date,
+                        Borrower = "Borrower: " + Borrower,
+                        IdNo = "ID No: " + IdNo,
+                        principalReference = principalReference,
+                        principalParticulars = principalParticulars,
+                        principalAmount = principalAmount,
+                        interestReference = interestReference,
+                        interestParticulars = interestParticulars,
+                        interestAmount = interestAmount,
+                        balancLoanNo = balancLoanNo,
+                        balanceAmount = balanceAmount
+                    });
+
+                    return Json(list, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         #region Methods
         public decimal GetBalance(string id)
         {

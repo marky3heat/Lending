@@ -53,9 +53,25 @@ namespace Lending_System.Controllers
                         select d.total_amount;
                     CashCollected = listCashCollected.AsEnumerable().Sum(o => o.Value);
 
+                    decimal Receivable = 0;
 
+                    CashReleased = decimal.Round(CashReleased, 2, MidpointRounding.AwayFromZero); 
+                    CashCollected = decimal.Round(CashCollected, 2, MidpointRounding.AwayFromZero);
+                    Receivable = decimal.Round((decimal)GetReceivables(), 2, MidpointRounding.AwayFromZero);
 
-                    return Json(CashReleased, JsonRequestBehavior.AllowGet);
+                    Session["Released"] = String.Format("{0:n}", CashReleased);
+                    Session["Collection"] = String.Format("{0:n}", CashCollected);
+                    Session["Receivables"] = String.Format("{0:n}", Receivable);
+
+                    List<DashboardModel> list = new List<DashboardModel>();
+                    list.Add(new DashboardModel
+                    {
+                        Released = String.Format("{0:n}", CashReleased),
+                        Collection = String.Format("{0:n}", CashCollected),
+                        Receivables = String.Format("{0:n}", Receivable),
+                    });
+
+                    return Json(list, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
