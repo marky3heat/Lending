@@ -3,9 +3,11 @@
 /// <reference path="../Areas/Administrator/Assets/model/adjustment.model.js" />
 /// <reference path="../Areas/Administrator/Assets/model/cashin.model.js" />
 /// <reference path="../areas/administrator/assets/model/collections.model.js" />
+/// <reference path="../areas/administrator/assets/model/restructure.model.js" />
 /// <reference path="../Areas/Administrator/Assets/viewmodel/adjustment.viewmodel.js" />
 /// <reference path="../Areas/Administrator/Assets/viewmodel/cashin.viewmodel.js" />
 /// <reference path="../areas/administrator/assets/viewmodel/collections.viewmodel.js" />
+/// <reference path="../areas/administrator/assets/viewmodel/restructure.viewmodel.js" />
 /// <reference path="../Assets/ckeditor/adapters/jquery.js" />
 /// <reference path="../Assets/ckeditor/build-config.js" />
 /// <reference path="../Assets/ckeditor/ckeditor.js" />
@@ -1454,6 +1456,9 @@
 /// <reference path="../assets/kojs/knockout-bootstrap.js" />
 /// <reference path="../assets/kojs/tinymce-knockout-binding.js" />
 /// <reference path="../assets/plugins/bootstrap-sweetalert/sweet-alert.js" />
+/// <reference path="../assets/plugins/limonte-sweetalert2 6.11.0/sweetalert2.all.min.js" />
+/// <reference path="../assets/plugins/limonte-sweetalert2 6.11.0/sweetalert2.common.js" />
+/// <reference path="../assets/plugins/limonte-sweetalert2 6.11.0/sweetalert2.js" />
 /// <reference path="../content/ui/assets/iframe.js" />
 /// <reference path="../content/ui/assets/iframe-content.js" />
 /// <reference path="../content/ui/assets/jquery.min.js" />

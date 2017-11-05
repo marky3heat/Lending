@@ -3,7 +3,7 @@
     var model = new app.DashboardDisplays();
 
     // #region CONTROLS                
-
+    var forRestructure = ko.observable();
     // #endregion
 
     // #region BEHAVIORS
@@ -17,6 +17,8 @@
             model.Released(result[0].Released);
             model.Collection(result[0].Collection)
             model.Receivables(result[0].Receivables)
+
+            forRestructure(result[0].ForRestructure)
         });
     }
 
@@ -25,7 +27,8 @@
     var vm = {
         activate: activate,
         update: update,
-        model: model
+        model: model,
+        forRestructure: forRestructure
     };
     return vm;a
 })();
@@ -35,11 +38,13 @@ $(function () {
     $.wait = function (callback, seconds) {
         return window.setTimeout(callback, seconds * 1000);
     }
-    debugger
+
     if (Released != "" && Collection != "" && Receivables != "") {
         app.vm.model.Released(Released);
         app.vm.model.Collection(Collection)
         app.vm.model.Receivables(Receivables)
+
+        app.vm.forRestructure(ForRestructure)
 
         $.wait(function () { app.vm.update() }, 30);
     }

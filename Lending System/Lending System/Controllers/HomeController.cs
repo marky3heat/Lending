@@ -20,6 +20,7 @@ namespace Lending_System.Controllers
                 ViewBag.Form = "Dashboard";
                 ViewBag.Controller = "Home";
                 ViewBag.Action = "Dashboard";
+                Session["RestructureCount"] = GetForRestructureDues();
 
                 return View();
             }
@@ -58,10 +59,12 @@ namespace Lending_System.Controllers
                     CashReleased = decimal.Round(CashReleased, 2, MidpointRounding.AwayFromZero); 
                     CashCollected = decimal.Round(CashCollected, 2, MidpointRounding.AwayFromZero);
                     Receivable = decimal.Round((decimal)GetReceivables(), 2, MidpointRounding.AwayFromZero);
+                    var ForRestructure = GetForRestructureDues();
 
                     Session["Released"] = String.Format("{0:n}", CashReleased);
                     Session["Collection"] = String.Format("{0:n}", CashCollected);
                     Session["Receivables"] = String.Format("{0:n}", Receivable);
+                    Session["RestructureCount"] = ForRestructure;
 
                     List<DashboardModel> list = new List<DashboardModel>();
                     list.Add(new DashboardModel
@@ -69,7 +72,9 @@ namespace Lending_System.Controllers
                         Released = String.Format("{0:n}", CashReleased),
                         Collection = String.Format("{0:n}", CashCollected),
                         Receivables = String.Format("{0:n}", Receivable),
+                        ForRestructure = ForRestructure.ToString()
                     });
+
 
                     return Json(list, JsonRequestBehavior.AllowGet);
                 }
@@ -265,10 +270,6 @@ namespace Lending_System.Controllers
                     }
                     else
                     {
-                        if (id == "2017-2-392")
-                        {
-                            var test = "";
-                        }
 
                         if ((decimal.ToInt32((serverDate - dateStartOfComputation).Value.Days)) >= 1)
                         {
@@ -379,5 +380,31 @@ namespace Lending_System.Controllers
                 return balance;
             }
         }
+        public int GetForRestructureDues()
+        {
+            try
+            {
+                using (db = new db_lendingEntities())
+                {
+                    var count = 0;
+                    var result = from d in db.tbl_loan_processing where d.due_date <= _serverDateTime && d.loantype_id == 2 && d.status == "Released" orderby d.loantype_id select d;
+
+                    foreach (var dt in result)
+                    {
+                        decimal loanBalance = decimal.Round((decimal)GetLedgerBalance(dt.loan_no), 2, MidpointRounding.AwayFromZero);
+                        if (loanBalance > 0)
+                        {
+                            count += 1;
+                        }
+                    }
+                    return count;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }

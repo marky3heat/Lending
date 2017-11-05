@@ -175,10 +175,14 @@
     <Compile Include="Areas\Administrator\Controllers\AdjustmentController.cs" />
     <Compile Include="Areas\Administrator\Controllers\CashInController.cs" />
     <Compile Include="Areas\Administrator\Controllers\CollectionController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\LoanController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\RestructureController.cs" />
     <Compile Include="Areas\Administrator\Models\collectionSaveModel.cs" />
     <Compile Include="Areas\Administrator\Models\DetailsForReprintModel.cs" />
     <Compile Include="Areas\Administrator\Models\loanAccountModel.cs" />
+    <Compile Include="Areas\Administrator\Models\loanDetailForRestructure.cs" />
     <Compile Include="Areas\Administrator\Models\loanListModel.cs" />
+    <Compile Include="Areas\Administrator\Models\restructureModel.cs" />
     <Compile Include="Areas\User\Controllers\DashboardController.cs" />
     <Compile Include="Areas\User\UserAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -287,9 +291,11 @@
     <Content Include="Areas\Administrator\Assets\model\adjustment.model.js" />
     <Content Include="Areas\Administrator\Assets\model\cashin.model.js" />
     <Content Include="Areas\Administrator\Assets\model\collections.model.js" />
+    <Content Include="Areas\Administrator\Assets\model\restructure.model.js" />
     <Content Include="Areas\Administrator\Assets\viewmodel\adjustment.viewmodel.js" />
     <Content Include="Areas\Administrator\Assets\viewmodel\cashin.viewmodel.js" />
     <Content Include="Areas\Administrator\Assets\viewmodel\collections.viewmodel.js" />
+    <Content Include="Areas\Administrator\Assets\viewmodel\restructure.viewmodel.js" />
     <Content Include="Assets\ckeditor\adapters\jquery.js" />
     <Content Include="Assets\ckeditor\build-config.js" />
     <Content Include="Assets\ckeditor\ckeditor.js" />
@@ -2737,6 +2743,13 @@
     <Content Include="Assets\plugins\bootstrap-sweetalert\sweet-alert.js" />
     <Content Include="Assets\plugins\bootstrap-sweetalert\sweet-alert.min.js" />
     <Content Include="Assets\plugins\bootstrap-sweetalert\thumbs-up.jpg" />
+    <Content Include="Assets\plugins\limonte-sweetalert2 6.11.0\sweetalert2.all.min.js" />
+    <Content Include="Assets\plugins\limonte-sweetalert2 6.11.0\sweetalert2.common.js" />
+    <Content Include="Assets\plugins\limonte-sweetalert2 6.11.0\sweetalert2.common.min.js" />
+    <Content Include="Assets\plugins\limonte-sweetalert2 6.11.0\sweetalert2.css" />
+    <Content Include="Assets\plugins\limonte-sweetalert2 6.11.0\sweetalert2.js" />
+    <Content Include="Assets\plugins\limonte-sweetalert2 6.11.0\sweetalert2.min.css" />
+    <Content Include="Assets\plugins\limonte-sweetalert2 6.11.0\sweetalert2.min.js" />
     <Content Include="Assets\swf\datatables\flashExport.swf" />
     <Content Include="Assets\swf\handsontable\zero_clipboard.swf" />
     <Content Include="Content\A-Custom\DashBoard\dashboard.css" />
@@ -3417,6 +3430,8 @@
     <Content Include="Assets\ckeditor\skins\bootstrapck\scss\config\_defaults.scss" />
     <Content Include="Assets\ckeditor\skins\bootstrapck\scss\dialog\dialog.scss" />
     <Content Include="Areas\Administrator\Views\CashIn\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\Restructure\Index.cshtml" />
+    <Content Include="Assets\plugins\limonte-sweetalert2 6.11.0\sweetalert2.common.min.js.map" />
     <None Include="Properties\PublishProfiles\Lending System.pubxml" />
     <Content Include="Images\Logo\logo.png" />
     <Content Include="Models\dbModel.Context.tt">
@@ -3647,6 +3662,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Administrator\Views\Loan\" />
     <Folder Include="Areas\Administrator\Views\Shared\" />
     <Folder Include="Areas\User\Models\" />
     <Folder Include="Areas\User\Views\Shared\" />

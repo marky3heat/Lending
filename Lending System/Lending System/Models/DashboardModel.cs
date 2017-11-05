@@ -10,5 +10,7 @@ namespace Lending_System.Models
         public string Released { get; set; }
         public string Collection { get; set; }
         public string Receivables { get; set; }
+
+        public string ForRestructure { get; set; }
     }
 }

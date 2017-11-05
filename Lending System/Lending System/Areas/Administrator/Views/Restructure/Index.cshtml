@@ -1,0 +1,121 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div data-bind="visible: isListShowed" class="panel panel-flat">
+    <div class="panel-heading">
+        <h6 class="panel-title">Loans for Resturcture</h6>
+        <div class="heading-elements">
+
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table text-nowrap" id="loan-table">
+            <thead>
+                <tr>
+                    <th>autonum</th>
+                    <th>Name of Customer</th>
+                    <th>Reference No.</th>    
+                    <th>Due Date</th>                
+                    <th>Balance</th>
+                    <th class="text-center"><i class="icon-arrow-down12"></i></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<div data-bind="visible: isCreateShowed" class="panel panel-flat">
+    <div class="panel-heading">
+        <h6 class="panel-title">Account Detail</h6>
+        <div class="heading-elements">
+            <button data-bind="click: backToList()" type="submit" class="btn btn-link"><i class="text-orange-600 icon-arrow-left13 position-left"></i> Back to list</button>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="form">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Customer Name</label>
+                        <input type="text" data-bind="textinput: forRestructureModel.customer_name" class="form-control" id="customer_name" readonly>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Loan No.</label>
+                        <input type="text" data-bind="textinput: forRestructureModel.loan_no" class="form-control" id="loan_no" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Loan Granted</label>
+                        <input type="text" data-bind="textinput: forRestructureModel.loan_granted" class="form-control" id="loan_granted" readonly>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Interest Rate</label>
+                        <input type="text" data-bind="textinput: forRestructureModel.loan_interest_rate" class="form-control" id="loan_interest_rate" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Payment Scheme</label>
+                        <input type="text" data-bind="textinput: forRestructureModel.payment_scheme" class="form-control" id="payment_scheme" readonly>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Due Date</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="icon-calendar22"></i></span>
+                            <input type="text" data-bind="textinput: forRestructureModel.due_date" class="form-control daterange-single" id="due_date" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Loan Date</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="icon-calendar22"></i></span>
+                            <input type="text" data-bind="textinput: forRestructureModel.loan_date" class="form-control daterange-single" id="loan_date" readonly>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>No of Installment</label>
+                        <input type="text" data-bind="textinput: forRestructureModel.installment_no" class="form-control" id="installment_no" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Total Receivables</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="icon-calendar22"></i></span>
+                            <input type="text" data-bind="textinput: forRestructureModel.total_receivables" class="form-control daterange-single" id="net_proceeds" readonly>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Balance</label>
+                        <input type="text" data-bind="textinput: forRestructureModel.balance" class="form-control" id="balance" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="~/Assets/js/plugins/forms/wizards/stepy.min.js"></script>
+    <script type="text/javascript" src="~/Assets/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript" src="~/Assets/js/core/libraries/jasny_bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Assets/js/plugins/forms/validation/validate.min.js"></script>
+    <script type="text/javascript" src="~/Assets/js/plugins/notifications/bootbox.min.js"></script>
+
+    <script src="~/Areas/Administrator/Assets/model/restructure.model.js"></script>
+    <script src="~/Areas/Administrator/Assets/viewmodel/restructure.viewmodel.js"></script>
+}

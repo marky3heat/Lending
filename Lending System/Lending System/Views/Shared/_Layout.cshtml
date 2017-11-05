@@ -35,7 +35,7 @@
     @Scripts.Render("~/bundles/ko-global")
     <!-- /knockout js references -->
     <!-- Core JS files -->
-    <script type="text/javascript" src="~/Assets/js/plugins/loaders/pace.min.js"></script>
+    @*<script type="text/javascript" src="~/Assets/js/plugins/loaders/pace.min.js"></script>*@
     <script type="text/javascript" src="~/Assets/js/core/libraries/jquery.min.js"></script>
     <script type="text/javascript" src="~/Assets/js/core/libraries/bootstrap.min.js"></script>
     <script type="text/javascript" src="~/Assets/js/plugins/loaders/blockui.min.js"></script>
@@ -56,14 +56,13 @@
     <script type="text/javascript" src="~/Assets/js/plugins/tables/datatables/datatables.min.js"></script>
     <script type="text/javascript" src="~/Assets/js/plugins/forms/selects/select2.min.js"></script>
     <script type="text/javascript" src="~/Assets/js/pages/datatables_basic.js"></script>
-    <script type="text/javascript" src="~/Assets/js/pages/datatables_basic.js"></script>
     <!-- /theme JS files -->
     <!---->
     <script src="~/Assets/kojs/knockout-bootstrap.js"></script>
     <script src="~/Assets/kojs/ajaxLoader.js"></script>
     <!---->
     <!-- Sweet Alert js -->
-    <script src="~/Assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
+    <script src="~/Assets/plugins/limonte-sweetalert2 6.11.0/sweetalert2.all.min.js"></script>
     <!-- /Sweet Alert js -->
     <!-- Moment JS -->
     <script src="~/Scripts/moment.js"></script>
@@ -76,6 +75,7 @@
         var Released = '@Session["Released"]';
         var Collection = '@Session["Collection"]';
         var Receivables = '@Session["Receivables"]';
+        var ForRestructure = '@Session["RestructureCount"]';
     </script> 
 
     @RenderSection("scripts", required: false)

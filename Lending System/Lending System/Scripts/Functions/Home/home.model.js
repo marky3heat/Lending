@@ -8,5 +8,6 @@
         self.Released = ko.observable(released);
         self.Collection = ko.observable(collection);
         self.Receivables = ko.observable(receivables);
+
         // #endregion
     };

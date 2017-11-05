@@ -758,32 +758,29 @@ namespace Lending_System.Areas.Administrator.Controllers
                         }
                         else
                         {
-                            //if ((decimal.ToInt32((_serverDateTime - dateStart).Value.Days)) >= 30)
+                            skipIinterest = true;
+                            //if ((decimal.ToInt32((_serverDateTime - dateStart).Value.Days)) >= 1)
                             //{
-                            //    noOfDays = (((_serverDateTime - dateStart).Value.Days)) / 30;
+                            //    if ((decimal.ToInt32((_serverDateTime - dateStart).Value.Days)) == 1)
+                            //    {
+                            //        if (NoOfInterest(dt.loan_no) >=
+                            //            (decimal.ToInt32((_serverDateTime - dateStart).Value.Days)))
+                            //        {
+                            //            skipIinterest = true;
+                            //        }
+                            //        noOfDays = 1;
+                            //    }
+                            //    else
+                            //    {
+                            //        noOfDays = (_serverDateTime - dateStart).Value.Days;
+                            //        noOfDays = (noOfDays / 30);
+                            //        noOfDays = decimal.Ceiling(noOfDays);
+                            //        if (NoOfInterest(dt.loan_no) >= noOfDays)
+                            //        {
+                            //            skipIinterest = true;
+                            //        }
+                            //    }
                             //}
-                            if ((decimal.ToInt32((_serverDateTime - dateStart).Value.Days)) >= 1)
-                            {
-                                if ((decimal.ToInt32((_serverDateTime - dateStart).Value.Days)) == 1)
-                                {
-                                    if (NoOfInterest(dt.loan_no) >=
-                                        (decimal.ToInt32((_serverDateTime - dateStart).Value.Days)))
-                                    {
-                                        skipIinterest = true;
-                                    }
-                                    noOfDays = 1;
-                                }
-                                else
-                                {
-                                    noOfDays = (_serverDateTime - dateStart).Value.Days;
-                                    noOfDays = (noOfDays / 30);
-                                    noOfDays = decimal.Ceiling(noOfDays);
-                                    if (NoOfInterest(dt.loan_no) >= noOfDays)
-                                    {
-                                        skipIinterest = true;
-                                    }
-                                }
-                            }
                         }
                         decimal totalInterest = 0;
                         for (var c = 0; c < noOfDays; c++)
@@ -907,6 +904,22 @@ namespace Lending_System.Areas.Administrator.Controllers
             }
 
             return noOfInterest;
+        }
+
+        public JsonResult CheckIfForRestructure(string id)
+        {
+            using (db = new db_lendingEntities())
+            {
+                var isTrue = false;
+                var result = from d in db.tbl_loan_processing where d.loan_no == id && d.due_date < _serverDateTime && d.loantype_id == 2 && d.status == "Released" orderby d.loantype_id select d;
+
+                foreach (var dt in result)
+                {
+                    isTrue = true;
+                }
+
+                return Json(isTrue, JsonRequestBehavior.AllowGet);
+            }
         }
         #endregion
     }
