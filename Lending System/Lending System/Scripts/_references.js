@@ -1456,9 +1456,9 @@
 /// <reference path="../assets/kojs/knockout-bootstrap.js" />
 /// <reference path="../assets/kojs/tinymce-knockout-binding.js" />
 /// <reference path="../assets/plugins/bootstrap-sweetalert/sweet-alert.js" />
-/// <reference path="../assets/plugins/limonte-sweetalert2 6.11.0/sweetalert2.all.min.js" />
-/// <reference path="../assets/plugins/limonte-sweetalert2 6.11.0/sweetalert2.common.js" />
-/// <reference path="../assets/plugins/limonte-sweetalert2 6.11.0/sweetalert2.js" />
+/// <reference path="../assets/plugins/limonte-sweetalert2/sweetalert2.all.min.js" />
+/// <reference path="../assets/plugins/limonte-sweetalert2/sweetalert2.common.js" />
+/// <reference path="../assets/plugins/limonte-sweetalert2/sweetalert2.js" />
 /// <reference path="../content/ui/assets/iframe.js" />
 /// <reference path="../content/ui/assets/iframe-content.js" />
 /// <reference path="../content/ui/assets/jquery.min.js" />

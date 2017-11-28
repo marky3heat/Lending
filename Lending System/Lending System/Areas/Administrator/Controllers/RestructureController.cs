@@ -80,7 +80,7 @@ namespace Lending_System.Areas.Administrator.Controllers
                         var dueDate = newDueDate.ToString("MM/dd/yyyy");
 
                         DateTime newLoanDate = (DateTime)dt.loan_date;
-                        var loanDate = newDueDate.ToString("MM/dd/yyyy");
+                        var loanDate = newLoanDate.ToString("MM/dd/yyyy");
 
                         decimal loanBalance = decimal.Round((decimal)GetLedgerBalance(dt.loan_no), 2, MidpointRounding.AwayFromZero);
                         if (loanBalance > 0)
