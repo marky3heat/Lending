@@ -908,17 +908,73 @@ namespace Lending_System.Areas.Administrator.Controllers
 
         public JsonResult CheckIfForRestructure(string id)
         {
-            using (db = new db_lendingEntities())
+            try
             {
-                var isTrue = false;
-                var result = from d in db.tbl_loan_processing where d.loan_no == id && d.due_date < _serverDateTime && d.loantype_id == 2 && d.status == "Released" orderby d.loantype_id select d;
-
-                foreach (var dt in result)
+                using (db = new db_lendingEntities())
                 {
-                    isTrue = true;
+                    var message = "";
+                    if (isRestructuredDone(id) == false)
+                    {
+                        message = "true";
+                    }
+                    else
+                    {
+                        message = "false";
+                    }
+
+                    return Json(new { success = true, message = message }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+        public Boolean isRestructuredDone(string id)
+        {
+            bool result = false;
+
+            try
+            {
+                using (db = new db_lendingEntities())
+                {
+                    bool hasLatePaymentInterest = false;
+                    DateTime? latePaymentInterestDate = DateTime.Now;
+                    var result1 =
+                        from d in db.tbl_loan_ledger
+                        where d.loan_no.Equals(id)
+                        orderby (d.autonum)
+                        select d;
+
+                    foreach (var data in result1)
+                    {
+                        switch (data.trans_type)
+                        {
+                            case "Beginning Balance":
+                                hasLatePaymentInterest = false;
+                                latePaymentInterestDate = (DateTime)data.date_trans;
+                                break;
+                            case "Late Payment Interest":
+                                hasLatePaymentInterest = true;
+                                latePaymentInterestDate = (DateTime)data.date_trans;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    if ((decimal.ToInt32((_serverDateTime - latePaymentInterestDate).Value.Days)) < 30)
+                    {
+                        result = true;
+                    }
                 }
 
-                return Json(isTrue, JsonRequestBehavior.AllowGet);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
         #endregion

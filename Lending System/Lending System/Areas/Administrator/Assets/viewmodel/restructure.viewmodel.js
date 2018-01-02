@@ -29,8 +29,6 @@
     }
 
     function loadList() {
-
-
         $("#loan-table").dataTable().fnDestroy();
         $('#loan-table').DataTable({
             "ajax": {
@@ -67,24 +65,56 @@
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, proceed to restructure'
-        }).then(function () {
-            isListShowed(false);
-            isCreateShowed(true);
+        }).then(function (result) {
+            if (result.dismiss != "cancel") {
+                isListShowed(false);
+                isCreateShowed(true);
 
-            $.getJSON(RootUrl + "Administrator/Restructure/GetLoanDetail?id=" + arg, function (result) {
-                forRestructureModel.autonum(result[0].autonum);
-                forRestructureModel.customer_name(result[0].customer_name);
-                forRestructureModel.loan_no(result[0].loan_no);
-                forRestructureModel.loan_granted(result[0].loan_granted);
-                forRestructureModel.loan_interest_rate(result[0].loan_interest_rate);
-                forRestructureModel.payment_scheme(result[0].payment_scheme);
-                forRestructureModel.due_date(result[0].due_date);
-                forRestructureModel.loan_date(result[0].loan_date);
-                forRestructureModel.installment_no(result[0].installment_no);
-                forRestructureModel.total_receivables(result[0].total_receivables);
-                forRestructureModel.balance(result[0].balance);
-            });
+                $.getJSON(RootUrl + "Administrator/Restructure/GetLoanDetail?id=" + arg, function (result) {
+                    forRestructureModel.autonum(result[0].autonum);
+                    forRestructureModel.customer_name(result[0].customer_name);
+                    forRestructureModel.loan_no(result[0].loan_no);
+                    forRestructureModel.loan_granted(result[0].loan_granted);
+                    forRestructureModel.loan_interest_rate(result[0].loan_interest_rate);
+                    forRestructureModel.payment_scheme(result[0].payment_scheme);
+                    forRestructureModel.due_date(result[0].due_date);
+                    forRestructureModel.loan_date(result[0].loan_date);
+                    forRestructureModel.installment_no(result[0].installment_no);
+                    forRestructureModel.total_receivables(result[0].total_receivables);
+                    forRestructureModel.balance(result[0].balance);
+                    forRestructureModel.restructured_interest(result[0].restructured_interest);
+                    forRestructureModel.new_balance(result[0].new_balance);
+                });
+            }
         })
+    }
+
+    function save() {
+        debugger;
+        if (forRestructureModel.loan_no() != "" && forRestructureModel.loan_no() != undefined) {
+            var id = forRestructureModel.loan_no();
+
+            loaderApp.showPleaseWait();
+            var url = RootUrl + "Administrator/Restructure/Save?id=" + id;
+            $.ajax({
+                type: 'POST',
+                url: url,
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+                    if (result.success) {
+                        swal({ title: "Success!", text: result.message, type: "success" });
+
+                        loaderApp.hidePleaseWait();
+                        loadList();
+                        backToList();
+                    } else {
+                        loaderApp.hidePleaseWait();
+
+                        swal("Error", result.message, "error");
+                    }
+                }
+            });
+        }
     }
 
     // #endregion
@@ -97,7 +127,8 @@
         isCreateShowed: isCreateShowed,
         forRestructure: forRestructure,
         forRestructureModel: forRestructureModel,
-        restructureLoan: restructureLoan
+        restructureLoan: restructureLoan,
+        save: save
     };
     return vm;
 })();

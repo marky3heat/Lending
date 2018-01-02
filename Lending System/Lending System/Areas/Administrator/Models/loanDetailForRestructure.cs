@@ -18,5 +18,7 @@ namespace Lending_System.Areas.Administrator.Models
         public string installment_no { get; set; }
         public string total_receivables { get; set; }
         public string balance { get; set; }
+        public string restructured_interest { get; set; }
+        public string new_balance { get; set; }
     }
 }

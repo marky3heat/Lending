@@ -1078,9 +1078,7 @@ D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\System.Diagnosti
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\System.IO.FileSystem.dll
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\System.IO.FileSystem.Primitives.dll
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\System.Reflection.Metadata.dll
-D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\System.Security.Cryptography.Algorithms.dll
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\System.Security.Cryptography.Primitives.dll
-D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\System.ValueTuple.dll
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\VBCSCompiler.exe
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\ApplicationInsights.config
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\csc.exe
@@ -1105,11 +1103,13 @@ D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\System.IO.FileSy
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\System.IO.Pipes.dll
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\System.Security.AccessControl.dll
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\System.Security.Claims.dll
+D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\System.Security.Cryptography.Algorithms.dll
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\System.Security.Cryptography.Encoding.dll
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\System.Security.Principal.Windows.dll
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\System.Text.Encoding.CodePages.dll
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\System.Threading.Thread.dll
+D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\System.ValueTuple.dll
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\System.Xml.ReaderWriter.dll
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\System.Xml.XmlDocument.dll
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\System.Xml.XPath.dll
@@ -1118,6 +1118,9 @@ D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\vbc.exe
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\vbc.exe.config
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\vbc.rsp
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\roslyn\VBCSCompiler.exe.config
+D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\Lending System.dll.config
+D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\Lending System.dll
+D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\Lending System.pdb
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\Antlr3.Runtime.dll
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\EntityFramework.dll
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\EntityFramework.SqlServer.dll
@@ -1161,9 +1164,6 @@ D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\System.Web.Razor.xml
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\System.Web.WebPages.xml
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\System.Web.WebPages.Deployment.xml
 D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\System.Web.WebPages.Razor.xml
-D:\WORK\GITHUB\Lending\Lending System\Lending System\obj\Debug\Lending System.csprojResolveAssemblyReference.cache
 D:\WORK\GITHUB\Lending\Lending System\Lending System\obj\Debug\Lending System.dll
 D:\WORK\GITHUB\Lending\Lending System\Lending System\obj\Debug\Lending System.pdb
-D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\Lending System.dll.config
-D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\Lending System.dll
-D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\Lending System.pdb
+D:\WORK\GITHUB\Lending\Lending System\Lending System\obj\Debug\Lending System.csprojResolveAssemblyReference.cache

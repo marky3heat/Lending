@@ -33,12 +33,11 @@
         isCreateModeShow(true);
 
         getServerDate();
-        //setTimeout(function () { $('#customerId').focus() }, 800);
+        setTimeout(function () { $('#customerId').focus() }, 300);
         clearControls();
     }
 
     function savePayment() {
-        debugger;
         if (savingToken()) {
             loaderApp.showPleaseWait();
             var param = ko.toJS(forSaveingModel);
@@ -234,13 +233,15 @@
     }
 
     function checkIfForRestructure(id) {
-        debugger
         $.getJSON(RootUrl + "Administrator/Collection/CheckIfForRestructure?id=" + id,
         function (result) {
-            isForRestructure(result);
+            debugger;
+            if (result.message == "true") {
+                isForRestructure(true);
+            }        
         });
     }
-
+    
     // #endregion
 
     //FROM STEPY
@@ -251,7 +252,6 @@
         });
     }
     function loadAccountList(arg) {
-
         $("#account-table").dataTable().fnDestroy();
         $('#account-table').dataTable({
             ajax: {
@@ -271,12 +271,12 @@
             ]
         });
     }
+
     function loadAccountDues() {
         $.wait = function (callback, seconds) {
             return window.setTimeout(callback, seconds * 1000);
         }
-
-        var validate = false;
+        var validate = "false";
         var selectedRow;
         var oTable = $('#account-table').dataTable();
         $("input:checked", oTable.fnGetNodes()).each(function () {
@@ -293,33 +293,16 @@
                 var customerName = document.getElementById("account-table").rows[i].cells[1].innerText;
                 $('#CustomerName').val(customerName);
                 var loanNo = document.getElementById("account-table").rows[i].cells[0].innerText;
+                $('#tempLoanNo').val(loanNo);
 
-                setTimeout(function () { checkIfForRestructure(loanNo); }, 500);
-                $.wait(function () {
-                    if (isForRestructure() === true) {
+                generateInterest(loanNo);
+                loadPrincipal(loanNo);
+                loadInterest(loanNo);
 
-                        swal({
-                            title: customerName,
-                            text: "Please proceed to restructure.",
-                            type: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Yes, proceed to restructure'
-                        }).then(function () {
-                            window.location.href = RootUrl + "Administrator/Restructure";
-                        })
-                        validate = false;
-                    }
-                    else {
-                        generateInterest(loanNo);
-                        loadPrincipal(loanNo);
-                        loadInterest(loanNo);
+                forSaveingModel.LoanNo = loanNo;
 
-                        forSaveingModel.LoanNo = loanNo;
-                        validate = true;
-                    }
-                }, 1);                        
+                validate = "true";
+           
             }
         }
         return validate;
@@ -440,6 +423,7 @@
         printReceipt: printReceipt,
         reprint: reprint,
         sreprint: sreprint,
+        checkIfForRestructure: checkIfForRestructure,
         isForRestructure: isForRestructure
     };
     return vm;

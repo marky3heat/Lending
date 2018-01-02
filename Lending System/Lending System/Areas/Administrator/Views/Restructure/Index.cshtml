@@ -124,10 +124,21 @@
         </div>
         <div class="panel-body">
             <div class="form">
-
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>New Loan Balance</label>
+                            <input type="text" data-bind="textinput: forRestructureModel.new_balance" class="form-control" id="new_balance" readonly>
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Restructure Interest</label>
+                            <input type="text" data-bind="textinput: forRestructureModel.restructured_interest" class="form-control" id="restructured_interest" readonly>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="text-right">
-                <button data-bind="" type="submit" class="btn bg-success btn-labeled btn-labeled-right ml-10"><b><i class="icon-plus3"></i></b>Save</button>
+                <button data-bind="click: save()" type="submit" class="btn bg-success btn-labeled btn-labeled-right ml-10"><b><i class="icon-plus3"></i></b>Save</button>
             </div>
         </div>
 

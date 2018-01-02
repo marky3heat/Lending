@@ -15,6 +15,8 @@
     self.installment_no = ko.observable();
     self.total_receivables = ko.observable();
     self.balance = ko.observable();
+    self.restructured_interest = ko.observable();   
+    self.new_balance = ko.observable();
     // #endregion   
 
     return self;

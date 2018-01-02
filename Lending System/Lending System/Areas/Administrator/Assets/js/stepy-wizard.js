@@ -69,15 +69,37 @@ $(function () {
             }
             if (index === 3) {
                 var valid = app.vm.loadAccountDues();
-                if (valid === false) {
+
+                 if (valid === "false") {
                     toastr.error("Please select an account.");
                     return false;
                 }
+
                 app.vm.getPaymentNo();
 
                 app.vm.forSaveingModel.PaymentDate = $("#PaymentDate").val();
+                setTimeout(function () {
+                    app.vm.checkIfForRestructure($("#tempLoanNo").val());
+                }, 300);
             }
             if (index === 4) {
+                if (app.vm.isForRestructure() === true) {
+                    swal({
+                        title: $("#customerId").find('option:selected').text(),
+                        text: "Please proceed to restructure.",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, proceed to restructure'
+                    }).then(function (result) {
+                        if (result.dismiss != "cancel") {
+                            window.location.href = RootUrl + "Administrator/Restructure";
+                        }
+                    });
+                    return false;
+                }
+
                 if (!$(".stepy-validation").validate(validate)) {
                     return false;
                 }
