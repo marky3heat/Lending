@@ -37,7 +37,7 @@ function GetCashPulledOut() {
 }
 function GetReceivablesForTheDay() {
     $.ajax({
-        url: RootUrl + "Home/GetReceivablesForTheDay",
+        url: RootUrl + "Home/LoadDashboard",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (response) {

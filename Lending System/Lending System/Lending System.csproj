@@ -3425,7 +3425,6 @@
     <Content Include="Assets\ckeditor\skins\bootstrapck\scss\dialog\dialog.scss" />
     <Content Include="Areas\Administrator\Views\CashIn\Index.cshtml" />
     <Content Include="Areas\Administrator\Views\Restructure\Index.cshtml" />
-    <None Include="Properties\PublishProfiles\Lending System.pubxml" />
     <Content Include="Images\Logo\logo.png" />
     <Content Include="Models\dbModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -3570,6 +3569,7 @@
     <Content Include="Scripts\i18n\defaults-zh_CN.min.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
+    <None Include="Properties\PublishProfiles\Lending.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />

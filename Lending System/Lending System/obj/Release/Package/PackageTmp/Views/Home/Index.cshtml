@@ -3,9 +3,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@Scripts.Render("~/Scripts/Functions/Home/initialize.js")
-@Scripts.Render("~/Scripts/Functions/Home/functions.js")
-
 <div class="panel panel-flat">
     <div class="panel-heading">
         <h4 class="panel-title"><strong>Welcome @Session["UserName"].ToString()!</strong></h4>
@@ -17,7 +14,7 @@
                     <h5><strong>Released</strong></h5>
                 </div>
                 <div class="panel-body">
-                    <input id="txtcash_release" class="form-control number" style="text-align:right" readonly>
+                    <input id="txtcash_release" data-bind="value: model.Released" class="form-control number" style="text-align:right" readonly>
                 </div>
             </div>
         </div>
@@ -27,7 +24,7 @@
                     <h5 style="color:#ffffff"><strong>Collection</strong></h5>
                 </div>
                 <div class="panel-body">
-                    <input id="txtcash_collected" class="form-control number" style="text-align:right" readonly>
+                    <input id="txtcash_collected" data-bind="value: model.Collection" class="form-control number" style="text-align:right" readonly>
                 </div>
             </div>
         </div>
@@ -37,10 +34,14 @@
                     <h5 style="color:#ffffff"><strong>Receivables</strong></h5>
                 </div>
                 <div class="panel-body">
-                    <input id="txtcash_pulled_out" class="form-control number" style="text-align:right" readonly>
+                    <input id="txtcash_pulled_out" data-bind="value: model.Receivables" class="form-control number" style="text-align:right" readonly>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+@section scripts{
+    <script src="~/Scripts/Functions/Home/home.model.js"></script>
+    <script src="~/Scripts/Functions/Home/home.viewmodel.js"></script>
+}

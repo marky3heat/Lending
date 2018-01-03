@@ -1,6 +1,10 @@
 ﻿app.vm = (function() {
     //"use strict";
+    var savingToken = ko.observable(false);
     var forSaveingModel = new app.createCollectionModel();
+    var sreprint = new app.reprint();
+
+    var isForRestructure = ko.observable(false);
 
     // #region CONTROLS                
     var isPaymentListShowed = ko.observable(true);
@@ -29,36 +33,37 @@
         isCreateModeShow(true);
 
         getServerDate();
-        //setTimeout(function () { $('#customerId').focus() }, 800);
+        setTimeout(function () { $('#customerId').focus() }, 300);
         clearControls();
     }
 
     function savePayment() {
-        //setTimeout(function () {
-        //    printReceipt('receipt');
-        //}, 300);
+        if (savingToken()) {
+            loaderApp.showPleaseWait();
+            var param = ko.toJS(forSaveingModel);
+            var url = RootUrl + "Administrator/Collection/Save";
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: ko.utils.stringifyJson(param),
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+                    if (result.success) {
+                        savingToken(false);
+                        swal({ title: "Success!", text: result.message, type: "success" }, function () { printReceipt('receipt'); });
 
-        loaderApp.showPleaseWait();
-        var param = ko.toJS(forSaveingModel);
-        var url = RootUrl + "Administrator/Collection/Save";
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: ko.utils.stringifyJson(param),
-            contentType: 'application/json; charset=utf-8',
-            success: function (result) {
-                if (result.success) {
+                        loaderApp.hidePleaseWait();
+                    } else {
+                        loaderApp.hidePleaseWait();
 
-                    swal({ title: "Success!", text: result.message, type: "success" }, function () { printReceipt('receipt'); });
-
-                    loaderApp.hidePleaseWait();
-                } else {
-                    loaderApp.hidePleaseWait();
-
-                    swal("Error", result.message, "error");
+                        swal("Error", result.message, "error");
+                    }
                 }
-            }
-        });
+            });
+        }
+        else {
+            reloadPage();
+        }
     }
 
     function backToPaymentList() {
@@ -101,7 +106,7 @@
                             '<li class="dropdown">' +
                             '<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>' +
                             '<ul class="dropdown-menu dropdown-menu-right">' +
-                            '<li><a href="#"><i class="icon-file-stats"></i> View receipt</a></li>' +
+                            '<li><button class="btn btn-link" style="text-align: center" onclick = "app.vm.reprint(' + row.autonum + ')"><i class="icon-file-stats"></i> View receipt</a></li>' +
                             '</ul>' +
                             '</li>' +
                             '</ul>';
@@ -168,6 +173,45 @@
         $('#balancLoanNo').html(forSaveingModel.LoanNo);
         $('#balanceAmount').html($('#Change').val());
     };
+    
+    function reprint(id) {
+        setTimeout(function () {
+            $.getJSON(RootUrl + "Administrator/Collection/LoadReprintDetails?id=" + id, function (result) {
+                sreprint.ReceiptNo(result[0].ReceiptNo);
+                sreprint.Date(result[0].Date);
+                sreprint.Borrower(result[0].Borrower);
+                sreprint.IdNo(result[0].IdNo);
+                sreprint.principalReference(result[0].principalReference);
+                sreprint.principalParticulars(result[0].principalParticulars);
+                sreprint.principalAmount(result[0].principalAmount);
+                sreprint.interestReference(result[0].interestReference);
+                sreprint.interestParticulars(result[0].interestParticulars);
+                sreprint.interestAmount(result[0].interestAmount);
+                sreprint.balancLoanNo(result[0].balancLoanNo);
+                sreprint.balanceAmount(result[0].balanceAmount);
+
+                $('#rReceiptNo').html(result[0].ReceiptNo);
+                $('#rDate').html(result[0].Date);
+                $('#rBorrower').html(result[0].Borrower);
+                $('#rIdNo').html(result[0].IdNo);
+
+                $('#rprincipalReference').html(result[0].principalReference);
+                $('#rprincipalParticulars').html(result[0].principalParticulars);
+                $('#rprincipalAmount').html(result[0].principalAmount);
+                $('#rinterestReference').html(result[0].interestReference);
+                $('#rinterestParticulars').html(result[0].interestParticulars);
+                $('#rinterestAmount').html(result[0].interestAmount);
+
+                $('#rbalancLoanNo').html(result[0].balancLoanNo);
+                $('#rbalanceAmount').html(result[0].balanceAmount);
+            });
+        }, 300);
+
+        setTimeout(function () {
+
+            $('#Reprint').appendTo("body").modal('show');
+        }, 1000);
+    }
 
     function printReceipt(divId) {
         setTimeout(function () {
@@ -187,6 +231,17 @@
         setTimeout(function () { mapSrc.close(); }, 300);
         setTimeout(function () { reloadPage(); }, 300);
     }
+
+    function checkIfForRestructure(id) {
+        $.getJSON(RootUrl + "Administrator/Collection/CheckIfForRestructure?id=" + id,
+        function (result) {
+            debugger;
+            if (result.message == "true") {
+                isForRestructure(true);
+            }        
+        });
+    }
+    
     // #endregion
 
     //FROM STEPY
@@ -197,7 +252,6 @@
         });
     }
     function loadAccountList(arg) {
-
         $("#account-table").dataTable().fnDestroy();
         $('#account-table').dataTable({
             ajax: {
@@ -217,8 +271,12 @@
             ]
         });
     }
+
     function loadAccountDues() {
-        var validate = false;
+        $.wait = function (callback, seconds) {
+            return window.setTimeout(callback, seconds * 1000);
+        }
+        var validate = "false";
         var selectedRow;
         var oTable = $('#account-table').dataTable();
         $("input:checked", oTable.fnGetNodes()).each(function () {
@@ -234,8 +292,8 @@
             if (i === selectedRow) {
                 var customerName = document.getElementById("account-table").rows[i].cells[1].innerText;
                 $('#CustomerName').val(customerName);
-
                 var loanNo = document.getElementById("account-table").rows[i].cells[0].innerText;
+                $('#tempLoanNo').val(loanNo);
 
                 generateInterest(loanNo);
                 loadPrincipal(loanNo);
@@ -243,13 +301,15 @@
 
                 forSaveingModel.LoanNo = loanNo;
 
-                validate = true;
+                validate = "true";
+           
             }
         }
         return validate;
     }
 
     function loadAmountDue() {
+        savingToken(true);
         var totalAmountDue = 0.00;
         var totalPrincipalRowCount = $("#principalTable tr").length;
         var totalInterestRowCount = $("#interestTable tr").length;
@@ -360,7 +420,11 @@
         forSaveingModel: forSaveingModel,
         clearControls: clearControls,
         generatePrintValues: generatePrintValues,
-        printReceipt: printReceipt
+        printReceipt: printReceipt,
+        reprint: reprint,
+        sreprint: sreprint,
+        checkIfForRestructure: checkIfForRestructure,
+        isForRestructure: isForRestructure
     };
     return vm;
 

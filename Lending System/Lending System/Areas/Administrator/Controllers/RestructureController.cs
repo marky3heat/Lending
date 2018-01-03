@@ -193,8 +193,9 @@ namespace Lending_System.Areas.Administrator.Controllers
             {
                 using (db = new db_lendingEntities())
                 {
-                    bool hasLatePaymentInterest = false;
+                    DateTime? DueDate = DateTime.Now;
                     DateTime? latePaymentInterestDate = DateTime.Now;
+                    Boolean hasLatePaymentInterest = false;
                     var result1 =
                         from d in db.tbl_loan_ledger
                         where d.loan_no.Equals(id)
@@ -206,18 +207,27 @@ namespace Lending_System.Areas.Administrator.Controllers
                         switch (data.trans_type)
                         {
                             case "Beginning Balance":
-                                hasLatePaymentInterest = false;
-                                latePaymentInterestDate = (DateTime)data.date_trans;
+                                DueDate = (DateTime)data.date_trans.Value.AddDays(0);
                                 break;
                             case "Late Payment Interest":
-                                hasLatePaymentInterest = true;
                                 latePaymentInterestDate = (DateTime)data.date_trans;
+                                hasLatePaymentInterest = true;
                                 break;
                             default:
                                 break;
                         }
                     }
-
+                    decimal loopCounter = decimal.ToInt32((_serverDateTime - DueDate).Value.Days);
+                    loopCounter = Convert.ToInt32(Math.Floor(loopCounter / 30));
+                    if (hasLatePaymentInterest == true)
+                    {
+                        latePaymentInterestDate = DueDate.Value.AddDays((double)loopCounter * 30);
+                    }
+                    else
+                    {
+                        latePaymentInterestDate = DueDate.Value.AddDays(0);
+                    }
+                  
                     if ((decimal.ToInt32((_serverDateTime - latePaymentInterestDate).Value.Days)) < 30)
                     {
                         result = true;
@@ -240,7 +250,9 @@ namespace Lending_System.Areas.Administrator.Controllers
             {
                 using (db = new db_lendingEntities())
                 {
+                    DateTime? DueDate = DateTime.Now;
                     DateTime? latePaymentInterestDate = DateTime.Now;
+                    Boolean hasLatePaymentInterest = false;
                     var result1 =
                         from d in db.tbl_loan_ledger
                         where d.loan_no.Equals(id)
@@ -252,21 +264,33 @@ namespace Lending_System.Areas.Administrator.Controllers
                         switch (data.trans_type)
                         {
                             case "Beginning Balance":
-                                latePaymentInterestDate = (DateTime)data.date_trans;
+                                DueDate = (DateTime)data.date_trans.Value.AddDays(0);
                                 break;
                             case "Late Payment Interest":
                                 latePaymentInterestDate = (DateTime)data.date_trans;
+                                hasLatePaymentInterest = true;
                                 break;
                             default:
                                 break;
                         }
                     }
 
+                    decimal loopCounter = decimal.ToInt32((_serverDateTime - DueDate).Value.Days);
+                    loopCounter = Convert.ToInt32(Math.Floor(loopCounter / 30));
+                    if (hasLatePaymentInterest == true)
+                    {
+                        latePaymentInterestDate = DueDate.Value.AddDays((double)loopCounter * 30);
+                    }
+                    else
+                    {
+                        latePaymentInterestDate = DueDate.Value.AddDays(0);
+                    }
+
                     decimal difference = (decimal.ToInt32((_serverDateTime - latePaymentInterestDate).Value.Days));
 
                     if (difference >= 30)
                     {
-                        result = Convert.ToInt32(Math.Floor(difference / 30)); ;
+                        result = Convert.ToInt32(Math.Floor(difference / 30));
                     }
                 }
 

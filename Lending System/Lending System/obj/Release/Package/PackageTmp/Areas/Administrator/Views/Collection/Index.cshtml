@@ -12,6 +12,7 @@
         width: 100px;
     }
 </style>*@
+<input type="text" id="tempLoanNo" hidden="true" />
 <div data-bind="visible: isPaymentListShowed" class="panel panel-flat">
     <div class="panel-heading">
         <h6 class="panel-title">Payment List</h6>
@@ -229,44 +230,46 @@
                                 <div class="table-responsive" style="width: 100%;">
                                     <table style="font-family: Consolas; width: 100%;">
                                         <tr>
-                                            <td class="col-lg-4" style="text-align: left; width: 166.7px;"></td>
-                                            <td class="col-lg-4" style="text-align: center; width: 166.7px; font-size: 18px;"><strong>RGL LENDING</strong></td>
-                                            <td class="col-lg-4" style="text-align: right; width: 166.7px;"></td>
+                                            <td class="col-lg-4" style="text-align: left; width: 5%;"></td>
+                                            <td class="col-lg-4" style="text-align: center; width: 90%; font-size: 18px;"><strong>RGL LENDING</strong></td>
+                                            <td class="col-lg-4" style="text-align: right; width: 5%;"></td>
                                         </tr>
                                         <tr>
-                                            <td class="col-lg-4" style="text-align: left; width: 166.7px;"></td>
-                                            <td class="col-lg-4" style="text-align: center; width: 166.7px; font-size: 14px;">Maa, Davao City</td>
-                                            <td class="col-lg-4" style="text-align: right; width: 166.7px;"></td>
-                                        </tr>                  
-                                        <tr>
-                                            <td class="col-lg-4" style="text-align: left; width: 166.7px;"></td>
-                                            <td class="col-lg-4" style="text-align: center; width: 166.7px;">&nbsp</td>
-                                            <td class="col-lg-4" style="text-align: right; width: 166.7px;"></td>
+                                            <td class="col-lg-4" style="text-align: left; width: 5%;"></td>
+                                            <td class="col-lg-4" style="text-align: center; width: 90%; font-size: 14px;">Maa, Davao City</td>
+                                            <td class="col-lg-4" style="text-align: right; width: 5%;"></td>
                                         </tr>
                                         <tr>
-                                            <td class="col-lg-4" style="text-align: left; width: 166.7px; font-size: 14px;" id="ReceiptNo"></td>
-                                            <td class="col-lg-4" style="text-align: center; width: 166.7px; font-size: 14px;"></td>
-                                            <td class="col-lg-4" style="text-align: right; width: 166.7px; font-size: 14px;"></td>
+                                            <td class="col-lg-4" style="text-align: left; width: 5%;"></td>
+                                            <td class="col-lg-4" style="text-align: center; width: 90%;">&nbsp</td>
+                                            <td class="col-lg-4" style="text-align: right; width: 5%;"></td>
+                                        </tr>
+                                    </table>
+                                    <table style="font-family: Consolas; width: 100%;">
+                                        <tr>
+                                            <td class="col-lg-4" style="text-align: left; width: 90%; font-size: 14px;" id="ReceiptNo"></td>
+                                            <td class="col-lg-4" style="text-align: center; width: 5%; font-size: 14px;"></td>
+                                            <td class="col-lg-4" style="text-align: right; width: 5%; font-size: 14px;"></td>
                                         </tr>
                                         <tr>
-                                            <td class="col-lg-4" style="text-align: left; width: 166.7px; font-size: 14px;" id="Date"></td>
-                                            <td class="col-lg-4" style="text-align: center; width: 166.7px; font-size: 14px;"></td>
-                                            <td class="col-lg-4" style="text-align: right; width: 166.7px; font-size: 14px;"></td>
-                                        </tr>  
+                                            <td class="col-lg-4" style="text-align: left; width: 90%; font-size: 14px;" id="Date"></td>
+                                            <td class="col-lg-4" style="text-align: center; width: 5%; font-size: 14px;"></td>
+                                            <td class="col-lg-4" style="text-align: right; width: 5%; font-size: 14px;"></td>
+                                        </tr>
                                         <tr>
-                                            <td class="col-lg-4" style="text-align: left; width: 166.7px; font-size: 14px;" id="Borrower"></td>
-                                            <td class="col-lg-4" style="text-align: center; width: 166.7px; font-size: 14px;"></td>
-                                            <td class="col-lg-4" style="text-align: right; width: 166.7px; font-size: 14px;"></td>
-                                        </tr>  
+                                            <td class="col-lg-4" style="text-align: left; width: 90%; font-size: 14px;" id="Borrower"></td>
+                                            <td class="col-lg-4" style="text-align: center; width: 5%; font-size: 14px;"></td>
+                                            <td class="col-lg-4" style="text-align: right; width: 5%; font-size: 14px;"></td>
+                                        </tr>
                                         <tr>
-                                            <td class="col-lg-4" style="text-align: left; width: 166.7px; font-size: 14px;" id="IdNo"></td>
-                                            <td class="col-lg-4" style="text-align: center; width: 166.7px; font-size: 14px;"></td>
-                                            <td class="col-lg-4" style="text-align: right; width: 166.7px; font-size: 14px;"></td>
-                                        </tr>  
+                                            <td class="col-lg-4" style="text-align: left; width: 90%; font-size: 14px;" id="IdNo"></td>
+                                            <td class="col-lg-4" style="text-align: center; width: 5%; font-size: 14px;"></td>
+                                            <td class="col-lg-4" style="text-align: right; width: 5%; font-size: 14px;"></td>
+                                        </tr>
                                         <tr>
-                                            <td class="col-lg-4" style="text-align: left; width: 166.7px; font-size: 14px;"></td>
-                                            <td class="col-lg-4" style="text-align: center; width: 166.7px; font-size: 14px;">&nbsp</td>
-                                            <td class="col-lg-4" style="text-align: right; width: 166.7px; font-size: 14px;"></td>
+                                            <td class="col-lg-4" style="text-align: left; width: 90%; font-size: 14px;"></td>
+                                            <td class="col-lg-4" style="text-align: center; width: 5%; font-size: 14px;">&nbsp</td>
+                                            <td class="col-lg-4" style="text-align: right; width: 5%; font-size: 14px;"></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -327,6 +330,121 @@
         <button data-bind="click: savePayment" type="submit" class="btn btn-success stepy-finish">Save <i class="icon-check position-right"></i></button>
     </form>
 </div>
+
+<!-- Reprint Modal -->
+<div id="Reprint" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h5 class="modal-title">Receipt</h5>
+            </div>
+
+            <div class="modal-body" id="receiptReprint">
+                <!--- Headers -->
+                <div class="table-responsive" style="width: 100%;">
+                    <table style="font-family: Consolas; width: 100%;">
+                        <tr>
+                            <td class="col-lg-4" style="text-align: left; width: 5%;"></td>
+                            <td class="col-lg-4" style="text-align: center; width: 90%; font-size: 18px;"><strong>RGL LENDING</strong></td>
+                            <td class="col-lg-4" style="text-align: right; width: 5%;"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-lg-4" style="text-align: left; width: 5%;"></td>
+                            <td class="col-lg-4" style="text-align: center; width: 90%; font-size: 14px;">Maa, Davao City</td>
+                            <td class="col-lg-4" style="text-align: right; width: 5%;"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-lg-4" style="text-align: left; width: 5%;"></td>
+                            <td class="col-lg-4" style="text-align: center; width: 90%;">&nbsp</td>
+                            <td class="col-lg-4" style="text-align: right; width: 5%;"></td>
+                        </tr>
+                    </table>
+                    <table style="font-family: Consolas; width: 100%;">
+                        <tr>
+                            <td class="col-lg-4" style="text-align: left; width: 90%; font-size: 14px;" id="rReceiptNo"></td>
+                            <td class="col-lg-4" style="text-align: center; width: 5%; font-size: 14px;"></td>
+                            <td class="col-lg-4" style="text-align: right; width: 5%; font-size: 14px;"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-lg-4" style="text-align: left; width: 90%; font-size: 14px;" id="rDate"></td>
+                            <td class="col-lg-4" style="text-align: center; width: 5%; font-size: 14px;"></td>
+                            <td class="col-lg-4" style="text-align: right; width: 5%; font-size: 14px;"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-lg-4" style="text-align: left; width: 90%; font-size: 14px;" id="rBorrower"></td>
+                            <td class="col-lg-4" style="text-align: center; width: 5%; font-size: 14px;"></td>
+                            <td class="col-lg-4" style="text-align: right; width: 5%; font-size: 14px;"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-lg-4" style="text-align: left; width: 90%; font-size: 14px;" id="rIdNo"></td>
+                            <td class="col-lg-4" style="text-align: center; width: 5%; font-size: 14px;"></td>
+                            <td class="col-lg-4" style="text-align: right; width: 5%; font-size: 14px;"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-lg-4" style="text-align: left; width: 90%; font-size: 14px;"></td>
+                            <td class="col-lg-4" style="text-align: center; width: 5%; font-size: 14px;">&nbsp</td>
+                            <td class="col-lg-4" style="text-align: right; width: 5%; font-size: 14px;"></td>
+                        </tr>
+                    </table>
+                </div>
+                <!--- /Headers -->
+                <!--- Body -->
+                <div class="table-responsive" style="width: 100%;">
+                    <table style="font-family: Consolas; width: 100%;">
+                        <tr>
+                            <td class="col-lg-4" style="text-align: left; width: 166.7px; font-size: 14px;"><strong>REFERENCE</strong></td>
+                            <td class="col-lg-4" style="text-align: center; width: 166.7px; font-size: 14px;"><strong>PARTICULARS</strong></td>
+                            <td class="col-lg-4" style="text-align: right; width: 166.7px; font-size: 14px;"><strong>AMOUNT</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="col-lg-4" style="text-align: left; width: 166.7px; font-size: 14px;" id="rprincipalReference"></td>
+                            <td class="col-lg-4" style="text-align: center; width: 166.7px; font-size: 14px;" id="rprincipalParticulars"></td>
+                            <td class="col-lg-4" style="text-align: right; width: 166.7px; font-size: 14px;" id="rprincipalAmount"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-lg-4" style="text-align: left; width: 166.7px; font-size: 14px;" id="rinterestReference"></td>
+                            <td class="col-lg-4" style="text-align: center; width: 166.7px; font-size: 14px;" id="rinterestParticulars"></td>
+                            <td class="col-lg-4" style="text-align: right; width: 166.7px; font-size: 14px;" id="rinterestAmount"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-lg-4" style="text-align: left; width: 166.7px; font-size: 14px;"></td>
+                            <td class="col-lg-4" style="text-align: center; width: 166.7px; font-size: 14px;">&nbsp</td>
+                            <td class="col-lg-4" style="text-align: right; width: 166.7px; font-size: 14px;"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-lg-4" style="text-align: left; width: 166.7px; font-size: 14px;"><strong>Balance:</strong></td>
+                            <td class="col-lg-4" style="text-align: center; width: 166.7px; font-size: 14px;"></td>
+                            <td class="col-lg-4" style="text-align: right; width: 166.7px; font-size: 14px;"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-lg-4" style="text-align: left; width: 166.7px; font-size: 14px;" id="rbalancLoanNo"></td>
+                            <td class="col-lg-4" style="text-align: center; width: 166.7px; font-size: 14px;"></td>
+                            <td class="col-lg-4" style="text-align: right; width: 166.7px; font-size: 14px;" id="rbalanceAmount"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-lg-4" style="text-align: left; width: 166.7px; font-size: 14px;"></td>
+                            <td class="col-lg-4" style="text-align: center; width: 166.7px; font-size: 14px;">&nbsp</td>
+                            <td class="col-lg-4" style="text-align: right; width: 166.7px; font-size: 14px;"></td>
+                        </tr>
+                        <tr>
+                            <td class="col-lg-4" style="text-align: left; width: 166.7px; font-size: 14px;">Cashier: @Session["UserFullName"]</td>
+                            <td class="col-lg-4" style="text-align: center; width: 166.7px; font-size: 14px;"></td>
+                            <td class="col-lg-4" style="text-align: right; width: 166.7px; font-size: 14px;"></td>
+                        </tr>
+                    </table>
+                </div>
+                <!--- /Body -->
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                <button type="button" data-bind="click: printReceipt('receiptReprint')" class="btn btn-primary">Print</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Reprint Modal -->
 
 @section scripts{
     <script type="text/javascript" src="~/Assets/js/plugins/forms/wizards/stepy.min.js"></script>
