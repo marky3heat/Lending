@@ -48,9 +48,21 @@
                 data: ko.utils.stringifyJson(param),
                 contentType: 'application/json; charset=utf-8',
                 success: function (result) {
-                    if (result.success) {
-                        savingToken(false);
-                        swal({ title: "Success!", text: result.message, type: "success" }, function () { printReceipt('receipt'); });
+                    if (result.success) {            
+                        //swal({ title: "Success!", text: result.message, type: "success" }, function () { printReceipt('receipt'); });
+                        debugger;
+                        swal({
+                            title: 'Success!',
+                            text: result.message,
+                            type: 'success',
+                            showCancelButton: false,
+                            allowOutsideClick: false
+                        }).then(function (result) {
+                            if (result.value) {
+                                printReceipt('receipt');
+                                //savingToken(false);
+                            }
+                        })
 
                         loaderApp.hidePleaseWait();
                     } else {
@@ -214,12 +226,16 @@
     }
 
     function printReceipt(divId) {
-        setTimeout(function () {
-            showPrintDialog(divId);
-        }, 800);
-
+        debugger;
+        if (savingToken()) {
+            setTimeout(function () {
+                showPrintDialog(divId);
+                savingToken(false);
+            }, 800);
+        };
     }
     function showPrintDialog(divId) {
+        debugger;
         var content = document.getElementById(divId);
         var mapSrc = window.open("", "PRINT MAP", "width=200,top=0,left=0,toolbar=no,scrollbars=no,status=no,resizable=no");
         mapSrc.document.write('<html><head>');
@@ -235,7 +251,6 @@
     function checkIfForRestructure(id) {
         $.getJSON(RootUrl + "Administrator/Collection/CheckIfForRestructure?id=" + id,
         function (result) {
-            debugger;
             if (result.message == "true") {
                 isForRestructure(true);
             }        
