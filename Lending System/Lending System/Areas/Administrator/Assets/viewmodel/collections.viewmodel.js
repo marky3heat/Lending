@@ -50,7 +50,6 @@
                 success: function (result) {
                     if (result.success) {            
                         //swal({ title: "Success!", text: result.message, type: "success" }, function () { printReceipt('receipt'); });
-                        debugger;
                         swal({
                             title: 'Success!',
                             text: result.message,
@@ -216,6 +215,7 @@
 
                 $('#rbalancLoanNo').html(result[0].balancLoanNo);
                 $('#rbalanceAmount').html(result[0].balanceAmount);
+                savingToken(true)
             });
         }, 300);
 
@@ -226,7 +226,6 @@
     }
 
     function printReceipt(divId) {
-        debugger;
         if (savingToken()) {
             setTimeout(function () {
                 showPrintDialog(divId);
@@ -235,7 +234,6 @@
         };
     }
     function showPrintDialog(divId) {
-        debugger;
         var content = document.getElementById(divId);
         var mapSrc = window.open("", "PRINT MAP", "width=200,top=0,left=0,toolbar=no,scrollbars=no,status=no,resizable=no");
         mapSrc.document.write('<html><head>');

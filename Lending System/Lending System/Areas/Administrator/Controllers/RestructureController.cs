@@ -228,7 +228,7 @@ namespace Lending_System.Areas.Administrator.Controllers
                         latePaymentInterestDate = DueDate.Value.AddDays(0);
                     }
                   
-                    if ((decimal.ToInt32((_serverDateTime - latePaymentInterestDate).Value.Days)) < 30)
+                    if ((decimal.ToInt32((_serverDateTime - latePaymentInterestDate).Value.Days)) < 31)
                     {
                         result = true;
                     }
