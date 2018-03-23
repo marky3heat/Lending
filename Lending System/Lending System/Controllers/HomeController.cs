@@ -75,7 +75,6 @@ namespace Lending_System.Controllers
                         ForRestructure = ForRestructure.ToString()
                     });
 
-
                     return Json(list, JsonRequestBehavior.AllowGet);
                 }
             }

@@ -1167,3 +1167,101 @@ D:\WORK\GITHUB\Lending\Lending System\Lending System\bin\System.Web.WebPages.Raz
 D:\WORK\GITHUB\Lending\Lending System\Lending System\obj\Debug\Lending System.dll
 D:\WORK\GITHUB\Lending\Lending System\Lending System\obj\Debug\Lending System.pdb
 D:\WORK\GITHUB\Lending\Lending System\Lending System\obj\Debug\Lending System.csprojResolveAssemblyReference.cache
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\ApplicationInsights.config
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\csc.exe
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\csc.exe.config
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\csc.rsp
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\csi.exe
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\csi.exe.config
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\csi.rsp
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\Microsoft.Win32.Primitives.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.AppContext.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.Collections.Immutable.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.Console.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.Diagnostics.Process.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.Diagnostics.StackTrace.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.IO.Compression.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.IO.FileSystem.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.IO.FileSystem.Primitives.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.IO.Pipes.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.Reflection.Metadata.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.Security.AccessControl.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.Security.Claims.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.Security.Cryptography.Encoding.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.Security.Cryptography.Primitives.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.Security.Principal.Windows.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.Text.Encoding.CodePages.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.Threading.Thread.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.ValueTuple.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.Xml.ReaderWriter.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.Xml.XmlDocument.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.Xml.XPath.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\System.Xml.XPath.XDocument.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\vbc.exe
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\vbc.exe.config
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\vbc.rsp
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\VBCSCompiler.exe
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\roslyn\VBCSCompiler.exe.config
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Lending System.dll.config
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Lending System.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Lending System.pdb
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Antlr3.Runtime.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\EntityFramework.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\EntityFramework.SqlServer.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Microsoft.AI.Agent.Intercept.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Microsoft.AI.DependencyCollector.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Microsoft.AI.PerfCounterCollector.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Microsoft.AI.ServerTelemetryChannel.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Microsoft.AI.Web.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Microsoft.AI.WindowsServer.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Microsoft.ApplicationInsights.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Microsoft.Web.Infrastructure.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\MySql.Data.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\MySql.Data.Entity.EF6.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Neodynamic.SDK.WebClientPrint.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Newtonsoft.Json.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\System.Web.Helpers.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\System.Web.Mvc.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\System.Web.Optimization.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\System.Web.Razor.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\System.Web.WebPages.Deployment.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\System.Web.WebPages.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\System.Web.WebPages.Razor.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\WebGrease.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Antlr3.Runtime.pdb
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\EntityFramework.xml
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\EntityFramework.SqlServer.xml
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Microsoft.AI.DependencyCollector.xml
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Microsoft.AI.ServerTelemetryChannel.xml
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Microsoft.AI.Web.xml
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Microsoft.AI.WindowsServer.xml
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Microsoft.ApplicationInsights.xml
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\MySql.Data.xml
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\MySql.Data.Entity.EF6.xml
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\Newtonsoft.Json.xml
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\System.Web.Helpers.xml
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\System.Web.Mvc.xml
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\System.Web.Optimization.xml
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\System.Web.Razor.xml
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\System.Web.WebPages.xml
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\System.Web.WebPages.Deployment.xml
+E:\WORK\GitHub\Lending\Lending System\Lending System\bin\System.Web.WebPages.Razor.xml
+E:\WORK\GitHub\Lending\Lending System\Lending System\obj\Debug\Lending System.csprojResolveAssemblyReference.cache
+E:\WORK\GitHub\Lending\Lending System\Lending System\obj\Debug\Lending System.dll
+E:\WORK\GitHub\Lending\Lending System\Lending System\obj\Debug\Lending System.pdb
