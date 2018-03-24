@@ -101,8 +101,8 @@ namespace Lending_System.Controllers
             {
                 if (Session["UserRank"].ToString() == "3")
                 {
-                    //return RedirectToAction("Index", "Dashboard", new { area = "User" });
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Dashboard", new { area = "User" });
+                    //return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -137,7 +137,7 @@ namespace Lending_System.Controllers
                     Session["UserName"] = tbl.username;
                     Session["UserFullName"] = tbl.firstname;
                     Session["UserRank"] = tbl.user_rank_id;
-                    LoadDashboard();
+                    //LoadDashboard();
 
                     if (tbl.user_rank_id == 3)
                     {
@@ -147,15 +147,18 @@ namespace Lending_System.Controllers
                     {
                         result = "Admin";                   
                     }
-                }
-                if (Session["UserRank"].ToString() == "3")
-                {
-                    //return RedirectToAction("Index", "Dashboard", new { area = "User" });
-                    return RedirectToAction("Index", "Home");
+                    if (Session["UserRank"].ToString() == "3")
+                    {
+                        return RedirectToAction("Index", "Dashboard", new { area = "User" });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
             catch (Exception ex)

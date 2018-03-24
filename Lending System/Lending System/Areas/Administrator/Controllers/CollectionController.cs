@@ -39,9 +39,12 @@ namespace Lending_System.Areas.Administrator.Controllers
         {
             try
             {
+                var dateNow = DateTime.Now;
+                dateNow = dateNow.AddDays(-7);
+
                 using (db = new db_lendingEntities())
                 {
-                    var result = db.tbl_payment.ToList();
+                    var result = db.tbl_payment.Where(a => a.date_trans >= dateNow).ToList();
 
                     return Json(new { data = result }, JsonRequestBehavior.AllowGet);
                 }

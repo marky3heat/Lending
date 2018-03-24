@@ -90,7 +90,6 @@
     }
 
     function save() {
-        debugger;
         if (forRestructureModel.loan_no() != "" && forRestructureModel.loan_no() != undefined) {
             var id = forRestructureModel.loan_no();
 
@@ -114,6 +113,22 @@
                     }
                 }
             });
+        }
+    }
+
+    var loadingMessage = {
+        start(title, text) {
+            swal({
+                title: title,
+                text: text,
+                allowOutsideClick: false,
+                onOpen: () => {
+                    swal.showLoading()
+                }
+            })
+        },
+        end() {
+            swal.close();
         }
     }
 

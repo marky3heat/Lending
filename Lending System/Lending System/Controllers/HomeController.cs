@@ -30,6 +30,7 @@ namespace Lending_System.Controllers
             }
         }
 
+        [HttpPost]
         public JsonResult LoadDashboard()
         {
             try
@@ -81,9 +82,7 @@ namespace Lending_System.Controllers
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
-            }
-
-           
+            }        
         }
 
         public decimal? GetReceivables()
@@ -386,7 +385,7 @@ namespace Lending_System.Controllers
                 using (db = new db_lendingEntities())
                 {
                     var count = 0;
-                    var result = from d in db.tbl_loan_processing where d.due_date <= _serverDateTime && d.loantype_id == 2 && d.status == "Released" orderby d.loantype_id select d;
+                    var result = from d in db.tbl_loan_processing where d.due_date <= _serverDateTime && d.loantype_id > 1 && d.status == "Released" orderby d.loantype_id select d;
 
                     foreach (var dt in result)
                     {

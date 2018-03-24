@@ -13,12 +13,18 @@
     }
 
     function update() {
-        $.getJSON(RootUrl + "Home/LoadDashboard", function (result) {
-            model.Released(result[0].Released);
-            model.Collection(result[0].Collection)
-            model.Receivables(result[0].Receivables)
+        $.ajax({
+            url: RootUrl + "Home/LoadDashboard",
+            type: "POST",
+            dataType: "json",
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                model.Released(result[0].Released);
+                model.Collection(result[0].Collection)
+                model.Receivables(result[0].Receivables)
 
-            forRestructure(result[0].ForRestructure)
+                forRestructure(result[0].ForRestructure)
+            }   
         });
     }
 
@@ -46,10 +52,10 @@ $(function () {
 
         app.vm.forRestructure(ForRestructure)
 
-        $.wait(function () { app.vm.update() }, 30);
+        $.wait(function () { app.vm.update() }, 3000);
     }
     else {
-        app.vm.update();
+        //app.vm.update();
     }
 
     //window.setTimeout(app.vm.update(), 5000);
