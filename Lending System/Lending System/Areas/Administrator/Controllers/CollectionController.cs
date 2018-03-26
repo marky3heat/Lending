@@ -944,6 +944,7 @@ namespace Lending_System.Areas.Administrator.Controllers
                 {
                     DateTime? DueDate = DateTime.Now;
                     DateTime? latePaymentInterestDate = DateTime.Now;
+                    DateTime? newPaymentInterestDate = DateTime.Now;
                     Boolean hasLatePaymentInterest = false;
                     var result1 =
                         from d in db.tbl_loan_ledger
@@ -959,6 +960,7 @@ namespace Lending_System.Areas.Administrator.Controllers
                                 DueDate = (DateTime)data.date_trans.Value.AddDays(0);
                                 break;
                             case "Late Payment Interest":
+                                newPaymentInterestDate= (DateTime)data.date_trans;
                                 latePaymentInterestDate = (DateTime)data.date_trans;
                                 hasLatePaymentInterest = true;
                                 break;
@@ -981,6 +983,10 @@ namespace Lending_System.Areas.Administrator.Controllers
                     if ((decimal.ToInt32((_serverDateTime - latePaymentInterestDate).Value.Days)) < 31)
                     {
                         result = true;
+                    }
+                    if (((double)loopCounter) > 1)
+                    {
+                        result = false;
                     }
                 }
 
