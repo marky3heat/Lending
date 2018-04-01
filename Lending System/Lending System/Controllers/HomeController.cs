@@ -20,8 +20,6 @@ namespace Lending_System.Controllers
                 ViewBag.Form = "Dashboard";
                 ViewBag.Controller = "Home";
                 ViewBag.Action = "Dashboard";
-                Session["RestructureCount"] = GetForRestructureDues();
-
                 return View();
             }
             else
@@ -60,12 +58,10 @@ namespace Lending_System.Controllers
                     CashReleased = decimal.Round(CashReleased, 2, MidpointRounding.AwayFromZero); 
                     CashCollected = decimal.Round(CashCollected, 2, MidpointRounding.AwayFromZero);
                     Receivable = decimal.Round((decimal)GetReceivables(), 2, MidpointRounding.AwayFromZero);
-                    var ForRestructure = GetForRestructureDues();
 
                     Session["Released"] = String.Format("{0:n}", CashReleased);
                     Session["Collection"] = String.Format("{0:n}", CashCollected);
                     Session["Receivables"] = String.Format("{0:n}", Receivable);
-                    Session["RestructureCount"] = ForRestructure;
 
                     List<DashboardModel> list = new List<DashboardModel>();
                     list.Add(new DashboardModel
@@ -73,7 +69,6 @@ namespace Lending_System.Controllers
                         Released = String.Format("{0:n}", CashReleased),
                         Collection = String.Format("{0:n}", CashCollected),
                         Receivables = String.Format("{0:n}", Receivable),
-                        ForRestructure = ForRestructure.ToString()
                     });
 
                     return Json(list, JsonRequestBehavior.AllowGet);
@@ -378,92 +373,5 @@ namespace Lending_System.Controllers
                 return balance;
             }
         }
-        public int GetForRestructureDues()
-        {
-            try
-            {
-                using (db = new db_lendingEntities())
-                {
-                    var count = 0;
-                    var result = from d in db.tbl_loan_processing where d.due_date <= _serverDateTime && d.loantype_id > 1 && d.status == "Released" orderby d.loantype_id select d;
-
-                    foreach (var dt in result)
-                    {
-                        decimal loanBalance = decimal.Round((decimal)GetLedgerBalance(dt.loan_no), 2, MidpointRounding.AwayFromZero);
-                        if (loanBalance > 0)
-                        {
-                            if (isRestructuredDone(dt.loan_no) == false)
-                            {
-                                count += 1;
-                            }
-                        }
-                    }
-                    return count;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-        public Boolean isRestructuredDone(string id)
-        {
-            bool result = false;
-
-            try
-            {
-                using (db = new db_lendingEntities())
-                {
-                    DateTime? DueDate = DateTime.Now;
-                    DateTime? latePaymentInterestDate = DateTime.Now;
-                    Boolean hasLatePaymentInterest = false;
-
-                    var result1 =
-                        from d in db.tbl_loan_ledger
-                        where d.loan_no.Equals(id)
-                        orderby (d.autonum)
-                        select d;
-
-                    foreach (var data in result1)
-                    {
-                        switch (data.trans_type)
-                        {
-                            case "Beginning Balance":
-                                DueDate = (DateTime)data.date_trans.Value.AddDays(0);
-                                break;
-                            case "Late Payment Interest":
-                                latePaymentInterestDate = (DateTime)data.date_trans;
-                                hasLatePaymentInterest = true;
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-
-                    decimal loopCounter = decimal.ToInt32((_serverDateTime - DueDate).Value.Days);
-                    loopCounter = Convert.ToInt32(Math.Floor(loopCounter / 30));
-                    if (hasLatePaymentInterest == true)
-                    {
-                        latePaymentInterestDate = DueDate.Value.AddDays((double)loopCounter * 30);
-                    }
-                    else
-                    {
-                        latePaymentInterestDate = DueDate.Value.AddDays(0);
-                    }
-
-                    if ((decimal.ToInt32((_serverDateTime - latePaymentInterestDate).Value.Days)) < 31)
-                    {
-                        result = true;
-                    }
-                }
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
     }
 }

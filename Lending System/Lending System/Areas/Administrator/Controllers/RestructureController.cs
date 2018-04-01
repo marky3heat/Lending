@@ -234,7 +234,11 @@ namespace Lending_System.Areas.Administrator.Controllers
                     {
                         result = true;
                     }
-                    if (((double)loopCounter) > 1)
+                    if ((decimal.ToInt32((_serverDateTime - newPaymentInterestDate).Value.Days)) < 31)
+                    {
+                        result = true;
+                    }
+                    else
                     {
                         result = false;
                     }
@@ -294,15 +298,7 @@ namespace Lending_System.Areas.Administrator.Controllers
                         latePaymentInterestDate = DueDate.Value.AddDays(0);
                     }
                     decimal difference = 0;
-                    if (loopCounter > 1)
-                    {
-                         difference = (decimal.ToInt32((_serverDateTime - newPaymentInterestDate).Value.Days));
-                    }
-                    else
-                    {
-                         difference = (decimal.ToInt32((_serverDateTime - latePaymentInterestDate).Value.Days));
-                    }
-                  
+                    difference = (decimal.ToInt32((_serverDateTime - newPaymentInterestDate).Value.Days));
 
                     if (difference >= 30)
                     {

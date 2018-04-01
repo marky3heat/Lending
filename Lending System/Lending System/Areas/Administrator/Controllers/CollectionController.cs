@@ -984,7 +984,11 @@ namespace Lending_System.Areas.Administrator.Controllers
                     {
                         result = true;
                     }
-                    if (((double)loopCounter) > 1)
+                    if ((decimal.ToInt32((_serverDateTime - newPaymentInterestDate).Value.Days)) < 31)
+                    {
+                        result = true;
+                    }
+                    else
                     {
                         result = false;
                     }

@@ -35,10 +35,12 @@ namespace Lending_System.Controllers
         {
             try
             {
+                var dateNow = DateTime.Now;
+                dateNow = dateNow.AddDays(-7);
                 using (db_lendingEntities db = new db_lendingEntities())
                 {
                     //var data = db.tbl_loan_processing.Where(a => a.loan_date >= DateTime.Now && a.loan_date <= DateTime.Now).ToList();
-                    var data = db.tbl_loan_processing.OrderBy(a => a.status).ToList();
+                    var data = db.tbl_loan_processing.Where(a => a.loan_date >= dateNow).OrderBy(a => a.status).ToList();
 
                     return Json(new { data = data }, JsonRequestBehavior.AllowGet);
                 }

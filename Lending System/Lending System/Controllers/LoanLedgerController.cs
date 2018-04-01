@@ -30,10 +30,12 @@ namespace Lending_System.Controllers
         {
             try
             {
+                var dateNow = DateTime.Now;
+                dateNow = dateNow.AddDays(-7);
                 using (db_lendingEntities db = new db_lendingEntities())
                 {
                     //var data = db.tbl_loan_processing.Where(a => a.loan_date >= DateTime.Now && a.loan_date <= DateTime.Now).ToList();
-                    var data = db.tbl_loan_processing.OrderByDescending(a => a.autonum).ToList();
+                    var data = db.tbl_loan_processing.Where(a => a.loan_date >= dateNow).OrderByDescending(a => a.autonum).ToList();
 
                     //var data = from d in db.tbl_loan_processing select new { d.autonum, d.loan_date, d.loan_no, d.loan_name, d.loan_granted };
 
